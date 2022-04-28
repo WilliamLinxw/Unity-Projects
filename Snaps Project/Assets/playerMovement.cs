@@ -50,4 +50,23 @@ public class playerMovement : MonoBehaviour
 
         controller.Move(velocity * Time.deltaTime);
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.tag == "Door")
+        {
+            if(other.GetComponent<slidingDoor>().Moving == false)
+            {
+                other.GetComponent<slidingDoor>().Moving = true;
+            }
+        }
+
+        if (other.tag == "Door_rec")
+        {
+            if (other.GetComponent<slidingDoor_rec>().Moving_rec == false)
+            {
+                other.GetComponent<slidingDoor_rec>().Moving_rec = true;
+            }
+        }
+    }
 }
