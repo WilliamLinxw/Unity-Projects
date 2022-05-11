@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
 
     private int pressE = 1000;
 
+    private float movingVel_;
+
     void Awake()
     {
         Instance = this;
@@ -28,11 +30,11 @@ public class PlayerMovement : MonoBehaviour
         isRunning = Input.GetKey(KeyCode.LeftShift);
         if (isRunning)
         {
-            movingVel = 6f;
+            movingVel_ = 2*movingVel;
         }
         else
         {
-            movingVel = 3f;
+            movingVel_ = movingVel;
         }
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
@@ -43,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * movingVel * Time.deltaTime);
+            controller.Move(moveDir.normalized * movingVel_ * Time.deltaTime);
         }
     }
 
@@ -92,5 +94,5 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    
+
 }

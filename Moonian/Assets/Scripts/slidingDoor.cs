@@ -16,7 +16,7 @@ public class slidingDoor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startPos = transform.position;
+        startPos = transform.localPosition;
     }
 
     // Update is called once per frame
@@ -37,10 +37,10 @@ public class slidingDoor : MonoBehaviour
 
     void MoveDoor(Vector3 goalPos)
     {
-        float dist = Vector3.Distance(transform.position, goalPos);
+        float dist = Vector3.Distance(transform.localPosition, goalPos);
         if(dist > .1f)
         {
-            transform.position = Vector3.Lerp(transform.position, goalPos, speed * Time.deltaTime);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, goalPos, speed * Time.deltaTime);
         }
         else
         {

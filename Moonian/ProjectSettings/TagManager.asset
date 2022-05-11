@@ -6,6 +6,8 @@ TagManager:
   tags:
   - World
   - Pickups
+  - Door
+  - Door_rec
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - UI
   - Ground
   - Pickups
-  - 
+  - Base
   - 
   - 
   - 

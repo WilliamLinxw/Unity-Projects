@@ -7,11 +7,15 @@ public class CanvasInit : MonoBehaviour
     public GameObject healthBar;
     public GameObject o2Bar;
     public GameObject inventoryUI;
+    public GameObject craftingUI;
 
     void Start()
     {
         healthBar.SetActive(false);
         o2Bar.SetActive(false);
+
+        inventoryUI.SetActive(false);
+        craftingUI.SetActive(false);
     }
 
     void Update()
@@ -27,6 +31,18 @@ public class CanvasInit : MonoBehaviour
         if (Input.GetButtonDown("Inventory"))
         {
             inventoryUI.SetActive(!inventoryUI.activeSelf);
+        }
+        if (inventoryUI.activeSelf)
+        {
+            craftingUI.SetActive(false);
+        }
+        if (Input.GetButtonDown("Crafting"))
+        {
+            craftingUI.SetActive(!craftingUI.activeSelf);
+        }
+        if (craftingUI.activeSelf)
+        {
+            inventoryUI.SetActive(false);
         }
     }
 }

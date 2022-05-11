@@ -33,7 +33,15 @@ public class InventoryManager : MonoBehaviour
             Debug.Log("Overweight!");
             // TODO some measures later; currently nothing would happen
         }
-        Items.Add(item);
+        if (Items.Contains(item))
+        {
+            Items[Items.IndexOf(item)].itemAmount += 1;
+        }
+        else
+        {
+            item.itemAmount = 1;
+            Items.Add(item);
+        }
         float newWeight = totalWeight + item.weight;
         if (onItemChangedCallback != null)
         {
@@ -43,16 +51,27 @@ public class InventoryManager : MonoBehaviour
     public void Remove(Item item)
     {
         Items.Remove(item);
-        totalWeight -= item.weight;
+        totalWeight -= item.weight * item.itemAmount;
         if (onItemChangedCallback != null)
         {
             onItemChangedCallback.Invoke();
         }
     }
-    public void Use(Item item)
+    public void Use(Item item, bool inCrafting)
     {
-        item.Use();
-        Remove(item);
+        Items[Items.IndexOf(item)].itemAmount -= 1;
+        if (!inCrafting)
+        {
+            item.Use();
+        }
+        else
+        {
+            CraftingManager.Instance.AddCraftingItem(item);
+        }
+        if (Items[Items.IndexOf(item)].itemAmount < 1)
+        {
+            Remove(item);
+        }
         // use switch
     }
 
