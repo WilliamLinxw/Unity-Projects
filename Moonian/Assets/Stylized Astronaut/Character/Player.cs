@@ -1,35 +1,54 @@
 using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
-		private Animator anim;
-		private CharacterController controller;
+    private Animator anim;
+    private CharacterController controller;
+    private float ySpeed;
 
-		public float speed = 600.0f;
-		public float turnSpeed = 400.0f;
-		private Vector3 moveDirection = Vector3.zero;
-		public float gravity = 20.0f;
+    public float speed;
+    public float turnSpeed;
+    public float jumpSpeed;
+    private Vector3 movementDirection = Vector3.zero;
 
-		void Start () {
-			controller = GetComponent <CharacterController>();
-			anim = gameObject.GetComponentInChildren<Animator>();
-		}
+    void Start()
+    {
+        controller = GetComponent<CharacterController>();
+        anim = gameObject.GetComponentInChildren<Animator>();
+    }
 
-		void Update (){
-			if (Input.GetKey ("w")) {
-				anim.SetInteger ("AnimationPar", 1);
-			}  else {
-				anim.SetInteger ("AnimationPar", 0);
-			}
+    void Update()
+    {
+        if (Input.GetKey("w"))
+        {
+            anim.SetInteger("AnimationPar", 1);
+        }
+        else
+        {
+            anim.SetInteger("AnimationPar", 0);
+        }
 
-			if(controller.isGrounded){
-				moveDirection = transform.forward * Input.GetAxis("Vertical") * speed;
-			}
+        float horizontalInput = Input.GetAxis("Horizontal");
 
-			float turn = Input.GetAxis("Horizontal");
-			transform.Rotate(0, turn * turnSpeed * Time.deltaTime, 0);
-			controller.Move(moveDirection * Time.deltaTime);
-			moveDirection.y -= gravity * Time.deltaTime;
-		}
+        ySpeed += Physics.gravity.y * Time.deltaTime;
+
+        if (controller.isGrounded)
+        {
+            ySpeed = -0.5f;   
+            if (Input.GetButtonDown("Jump"))
+            {
+                Debug.Log("jump");
+                ySpeed = jumpSpeed;
+            }
+        }
+        
+        transform.Rotate(0, horizontalInput * turnSpeed * Time.deltaTime, 0);
+
+        movementDirection = transform.forward * Input.GetAxis("Vertical") * speed;
+        Vector3 velocity = movementDirection * speed;
+        velocity.y = ySpeed;
+        controller.Move(velocity * Time.deltaTime);
+    }
 }
