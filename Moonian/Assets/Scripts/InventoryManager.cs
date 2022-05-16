@@ -59,13 +59,14 @@ public class InventoryManager : MonoBehaviour
     }
     public void Use(Item item, bool inCrafting)
     {
-        Items[Items.IndexOf(item)].itemAmount -= 1;
-        if (!inCrafting)
+        if (!inCrafting && item.isInteratable)
         {
+            Items[Items.IndexOf(item)].itemAmount -= 1;
             item.Use();
         }
-        else
+        else if (inCrafting && item.isCollectable)
         {
+            Items[Items.IndexOf(item)].itemAmount -= 1;
             CraftingManager.Instance.AddCraftingItem(item);
         }
         if (Items[Items.IndexOf(item)].itemAmount < 1)

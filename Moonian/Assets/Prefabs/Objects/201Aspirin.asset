@@ -22,5 +22,5 @@ MonoBehaviour:
   itemAmount: 0
   maxStack: 100
   category: 4
-  itemValue: 85
-  isUpTo: 1
+  itemValue: 50
+  isUpTo: 0

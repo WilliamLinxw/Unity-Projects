@@ -9,6 +9,8 @@ public class CraftingManager : MonoBehaviour
     public List<Item> Crafted = new List<Item>();
     public int maxCraftingRoom, maxCraftedRoom = 4;
 
+    public delegate void OnItemChanged();
+    public OnItemChanged onItemChangedCallback;
     public CraftingUI craftingUI;
 
     private void Awake()
@@ -19,22 +21,53 @@ public class CraftingManager : MonoBehaviour
 
     public void AddCraftingItem(Item item)
     {
-        if (Crafting.Count > maxCraftingRoom)
+        Item item_ = Instantiate(item);
+        if (Crafting.Count >= maxCraftingRoom)
         {
+            Debug.Log("No enough crafting room!");
             return;
         }
-        if (Crafting.Contains(item))
+        int item_ind = CheckContainsItem(item_.itemName, Crafting);
+        if (item_ind == -1)
         {
-            Crafting[Crafting.IndexOf(item)].itemAmount += 1;
+            item_.itemAmount = 1;
+            Crafting.Add(item_);
         }
         else
         {
-            item.itemAmount = 1;
-            Crafting.Add(item);
+            Crafting[item_ind].itemAmount += 1;
         }
+        if (onItemChangedCallback != null)
+        {
+            onItemChangedCallback.Invoke();
+        }
+    }
+    public void RemoveCraftingItem(Item item)
+    {
+        Crafting.Remove(item);
+        if (onItemChangedCallback != null)
+        {
+            onItemChangedCallback.Invoke();
+        }
+    }
+    public int CheckMaxAmount()
+    {
+        return 0;
     }
     public void GenerateCraftedItems()
     {
 
+    }
+    
+    int CheckContainsItem(string itemName, List<Item> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (list[i].itemName == itemName && list[i].itemAmount < list[i].maxStack)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 }

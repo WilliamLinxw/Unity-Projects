@@ -20,10 +20,10 @@ public class Consumable : Item
             case ItemCategory.Medicine:
                 switch (isUpTo)
                 {
-                    case true:
+                    case false:
                         PlayerProperty.Instance.Cure(itemValue);
                         break;
-                    case false:
+                    case true:
                         PlayerProperty.Instance.CureUpTo(itemValue);
                         break;
                 }

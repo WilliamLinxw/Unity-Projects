@@ -21,6 +21,19 @@ public class Item : ScriptableObject
         // use this item...
         Debug.Log("Using" + itemName);
     }
+
+    public Item Clone() => new Item {
+        id = this.id,
+        itemName = this.itemName,
+        icon = this.icon,
+        isInteratable = this.isInteratable,
+        isCollectable = this.isCollectable,
+        isSpawnable = this.isSpawnable,
+        weight = this.weight,
+        itemAmount = 0,
+        maxStack = this.maxStack,
+        category = this.category,
+    };
 }
 
 public enum ItemCategory {Flag, Food, Fuel, LSSupplement, Medicine, O2, Ore, ShipWreckage, TerrainObj, Tools, Water, Others}

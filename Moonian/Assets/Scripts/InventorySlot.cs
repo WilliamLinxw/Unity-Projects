@@ -39,14 +39,18 @@ public class InventorySlot : MonoBehaviour
         if (item != null)
         {
             if (item.itemAmount > 1)
-        {
-            numText.SetActive(true);
-        }
-        else
-        {
-            numText.SetActive(false);
-        }
-        numText.GetComponent<Text>().text = item.itemAmount.ToString();
+            {
+                numText.SetActive(true);
+            }
+            else
+            {
+                numText.SetActive(false);
+            }
+            numText.GetComponent<Text>().text = item.itemAmount.ToString();
+            if (item.itemAmount <= 0)
+            {
+                InventoryManager.Instance.Remove(item);
+            }
         }
         // else
         // {
@@ -62,7 +66,7 @@ public class InventorySlot : MonoBehaviour
     
     public void UseItem()
     {
-        if ((item != null) && !inCrafting)
+        if (item != null)
         {
             InventoryManager.Instance.Use(item, inCrafting);
             UpdateAmount();
