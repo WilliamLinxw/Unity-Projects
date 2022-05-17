@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7500796260839213578}
+  - component: {fileID: 2255199385966128530}
   m_Layer: 7
   m_Name: Cardbox
   m_TagString: Pickups
@@ -31,6 +32,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2255199385966128530
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4221519754089388360}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6516981, y: 0.6426906, z: 0.6510296}
+  m_Center: {x: -0.007610798, y: -0.0056895316, z: -0.005127907}
 --- !u!1001 &7818748348334554176
 PrefabInstance:
   m_ObjectHideFlags: 0

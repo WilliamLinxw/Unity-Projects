@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Player : MonoBehaviour
     public float turnSpeed;
     public float jumpSpeed;
     private Vector3 movementDirection = Vector3.zero;
+
+    private int pressE = 1000;
 
     void Start()
     {
@@ -50,5 +53,48 @@ public class Player : MonoBehaviour
         Vector3 velocity = movementDirection * speed;
         velocity.y = ySpeed;
         controller.Move(velocity * Time.deltaTime);
+
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            pressE = 0;
+        }
+        pressE += 1;
+    }
+
+    private void OnTriggerStay(Collider other) 
+    {
+        if (other.gameObject.CompareTag("Pickups") && other.gameObject.GetComponent<ItemController>().item.isCollectable && pressE <= 500)
+        {
+            bool interacted = other.gameObject.GetComponent<ItemController>().Interact();
+            if (interacted)
+            {
+                other.gameObject.SetActive(false);
+            }
+            // Item item = other.gameObject.GetComponent<ItemController>().item;
+            // InventoryManager.Instance.Add(item);
+
+            pressE = 1000;
+        }
+
+        if (other.tag == "Door")
+        {
+            if (other.GetComponent<slidingDoor>().Moving == false)
+            {
+                other.GetComponent<slidingDoor>().Moving = true;
+            }
+        }
+
+        if (other.tag == "Door_rec")
+        {
+            if (other.GetComponent<slidingDoor_rec>().Moving_rec == false)
+            {
+                other.GetComponent<slidingDoor_rec>().Moving_rec = true;
+            }
+        }
     }
 }
