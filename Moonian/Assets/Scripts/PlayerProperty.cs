@@ -30,7 +30,7 @@ public class PlayerProperty : MonoBehaviour
 
     private float minHealth, minO2, minLS = 0;
     private int checkHealthState, checkO2State, checkLSState;
-    private float _runningConsumingRate;
+    private float _runningConsumingRate = 1;
     
 
     void Awake()
@@ -45,7 +45,7 @@ public class PlayerProperty : MonoBehaviour
     void Update()
     {
         _isInShelters = (isInBase) && (isInVehicle);
-        if (PlayerMovement.Instance.isRunning)
+        if (Player.Instance.isRunning)
         {
             _runningConsumingRate = 2;
         }
@@ -56,7 +56,7 @@ public class PlayerProperty : MonoBehaviour
         checkHealthState = CheckPropRange(_currentHealth, maxHealth, minHealth);
         checkO2State = CheckPropRange(_currentO2, maxO2, minO2);
         checkLSState = CheckPropRange(_currentLS, maxLS, minLS);
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.RightShift))
         {
             TakeDamage(20);
         }

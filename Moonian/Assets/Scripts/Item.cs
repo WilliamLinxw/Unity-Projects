@@ -10,7 +10,7 @@ public class Item : ScriptableObject
     public bool isCollectable;
     public bool isSpawnable;
     public float weight;
-    public int itemAmount;  // use this for stack
+    public int itemAmount = 1;  // use this for stack
     public int maxStack = 100;
 
     public ItemCategory category;
@@ -30,10 +30,10 @@ public class Item : ScriptableObject
         isCollectable = this.isCollectable,
         isSpawnable = this.isSpawnable,
         weight = this.weight,
-        itemAmount = 0,
+        itemAmount = this.itemAmount,
         maxStack = this.maxStack,
         category = this.category,
     };
 }
 
-public enum ItemCategory {Flag, Food, Fuel, LSSupplement, Medicine, O2, Ore, ShipWreckage, TerrainObj, Tools, Water, Others}
+public enum ItemCategory {Flag, Food, Fuel, LSSupplement, Medicine, O2, Ore, ShipWreckage, TerrainObj, Tools, Water, Others, Container}

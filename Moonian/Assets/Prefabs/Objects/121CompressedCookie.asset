@@ -19,7 +19,7 @@ MonoBehaviour:
   isCollectable: 1
   isSpawnable: 0
   weight: 0.25
-  itemAmount: 0
+  itemAmount: 1
   maxStack: 100
   category: 1
   itemValue: 15

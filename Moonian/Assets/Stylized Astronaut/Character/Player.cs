@@ -4,17 +4,24 @@ using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
-
+    public static Player Instance;
     private Animator anim;
     private CharacterController controller;
     private float ySpeed;
 
-    public float speed;
+    public bool isRunning = false;
+    public float speed = 2f;
     public float turnSpeed;
     public float jumpSpeed;
     private Vector3 movementDirection = Vector3.zero;
+    private bool jumpflag = false;
 
     private int pressE = 1000;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -22,38 +29,15 @@ public class Player : MonoBehaviour
         anim = gameObject.GetComponentInChildren<Animator>();
     }
 
+    void FixedUpdate()
+    {
+        // MotionUpdate(Time.fixedDeltaTime);
+    }
+
     void Update()
     {
-        if (Input.GetKey("w"))
-        {
-            anim.SetInteger("AnimationPar", 1);
-        }
-        else
-        {
-            anim.SetInteger("AnimationPar", 0);
-        }
-
-        float horizontalInput = Input.GetAxis("Horizontal");
-
-        ySpeed += Physics.gravity.y * Time.deltaTime;
-
-        if (controller.isGrounded)
-        {
-            ySpeed = -0.5f;   
-            if (Input.GetButtonDown("Jump"))
-            {
-                Debug.Log("jump");
-                ySpeed = jumpSpeed;
-            }
-        }
+        MotionUpdate(Time.deltaTime);
         
-        transform.Rotate(0, horizontalInput * turnSpeed * Time.deltaTime, 0);
-
-        movementDirection = transform.forward * Input.GetAxis("Vertical") * speed;
-        Vector3 velocity = movementDirection * speed;
-        velocity.y = ySpeed;
-        controller.Move(velocity * Time.deltaTime);
-
         if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
@@ -64,6 +48,72 @@ public class Player : MonoBehaviour
             pressE = 0;
         }
         pressE += 1;
+    }
+
+    void MotionUpdate(float deltaTime)
+    {
+        if (controller.isGrounded)
+        {
+            jumpflag = false;
+        }
+        if (Input.GetKey("w"))
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                anim.SetInteger("AnimationPar", 1);
+            }
+            else
+            {
+                anim.SetInteger("AnimationPar", 2);
+            }
+            
+        }
+        else
+        {
+            anim.SetInteger("AnimationPar", 0);
+        }
+
+        float horizontalInput = Input.GetAxis("Horizontal");
+
+        ySpeed += Physics.gravity.y * deltaTime;
+
+        if (controller.isGrounded)
+        {
+            ySpeed = -0.5f;
+            if (Input.GetButtonDown("Jump"))
+            {
+                jumpflag = true;
+                Debug.Log("jump");
+                ySpeed = jumpSpeed;
+            }
+        }
+        if (controller.isGrounded)
+        {
+            transform.Rotate(0, horizontalInput * turnSpeed * deltaTime, 0);
+        }
+
+        isRunning = Input.GetKey(KeyCode.LeftShift);
+        if (isRunning)
+        {
+            speed = 3f;
+        }
+        else
+        {
+            speed = 2f;
+        }
+
+        movementDirection = transform.forward * Input.GetAxis("Vertical") * speed;
+        Vector3 velocity = Vector3.zero;
+        if (controller.isGrounded && !jumpflag)
+        {
+            velocity = movementDirection * speed;
+        }
+        else
+        {
+            velocity = controller.velocity;
+        }
+        velocity.y = ySpeed;
+        controller.Move(velocity * deltaTime);
     }
 
     private void OnTriggerStay(Collider other) 

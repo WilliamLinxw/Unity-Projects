@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7500796260839213578}
   - component: {fileID: 2255199385966128530}
+  - component: {fileID: 142096005103783756}
+  - component: {fileID: 8122673938209129952}
   m_Layer: 7
   m_Name: Cardbox
   m_TagString: Pickups
@@ -40,11 +42,38 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4221519754089388360}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6516981, y: 0.6426906, z: 0.6510296}
-  m_Center: {x: -0.007610798, y: -0.0056895316, z: -0.005127907}
+  m_Size: {x: 1.1002388, y: 0.8245961, z: 1.4397697}
+  m_Center: {x: 0.01304245, y: 0.08526322, z: -0.052122116}
+--- !u!114 &142096005103783756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4221519754089388360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2849221e8bb91504d9f6ce37b3c54e0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 2f1813c4b2fc47c42a69733c6cdc1e3d, type: 2}
+--- !u!114 &8122673938209129952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4221519754089388360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0888b22b05576348a89e7f5d0026196, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Contents: []
+  Amounts: 
 --- !u!1001 &7818748348334554176
 PrefabInstance:
   m_ObjectHideFlags: 0

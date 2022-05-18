@@ -22,7 +22,11 @@ public class InventoryManager : MonoBehaviour
     }
     public void Add(Item item)
     {
-        if (Items.Count > maxRoom)
+        if (item.itemAmount == 0)
+        {
+            item.itemAmount = 1;
+        }
+        if (Items.Count >= maxRoom)
         {
             Debug.Log("No enough room!");
             // TODO alerts required
@@ -33,15 +37,42 @@ public class InventoryManager : MonoBehaviour
             Debug.Log("Overweight!");
             // TODO some measures later; currently nothing would happen
         }
+        bool itemplaced = false;
+        for (int i = 0; i < Items.Count; i++)
+        {
+            if (Items[i].id == item.id)
+            {
+                Items[i].itemAmount += item.itemAmount;
+                itemplaced = true;
+                break;
+            }
+        }
+        if (!itemplaced)
+        {
+            Items.Add(Instantiate(item));
+        }    
+        /*
         if (Items.Contains(item))
         {
-            Items[Items.IndexOf(item)].itemAmount += 1;
+            todo item stacks
+            if (item.itemAmount + Items[Items.IndexOf(item)].itemAmount < item.maxStack)
+            {
+                Items[Items.IndexOf(item)].itemAmount += item.itemAmount;
+            }
+            else
+            {
+                item.itemAmount = Items[Items.IndexOf(item)].itemAmount + item.itemAmount - item.maxStack;
+                Items[Items.IndexOf(item)].itemAmount = item.maxStack;
+                Add(item);
+            }
+            Items[Items.IndexOf(item)].itemAmount += item.itemAmount;
         }
         else
         {
-            item.itemAmount = 1;
-            Items.Add(item);
+            // item.itemAmount = 1;
+            Items.Add(Instantiate(item));
         }
+        */
         float newWeight = totalWeight + item.weight;
         if (onItemChangedCallback != null)
         {

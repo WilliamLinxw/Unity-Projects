@@ -13,7 +13,7 @@ public class CraftingSlot : MonoBehaviour
 
     public void AddItem(Item newItem)
     {
-        item = newItem;
+        item = Instantiate(newItem);
 
         icon.sprite = item.icon;
         icon.enabled = true;
@@ -53,5 +53,9 @@ public class CraftingSlot : MonoBehaviour
     public void OnRemoveButton()
     {
         InventoryManager.Instance.Add(item);
+        icon.sprite = null;
+        item.itemAmount = 0;
+        item = null;
+        ClearSlot();
     }
 }
