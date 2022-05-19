@@ -44,7 +44,20 @@ public class CraftingManager : MonoBehaviour
     }
     public void RemoveCraftingItem(Item item)
     {
-        Crafting.Remove(item);
+        if (item == null)
+        {
+            return;
+        }
+        Debug.Log(item.itemAmount);
+        for (int i = 0; i < Crafting.Count; i++)
+        {
+            if (Crafting[i] != null && item.id == Crafting[i].id)
+            {
+                Debug.Log(Crafting[i].itemAmount);
+                Crafting.RemoveAt(i);
+                break;
+            }
+        }
         if (onItemChangedCallback != null)
         {
             onItemChangedCallback.Invoke();

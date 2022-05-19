@@ -52,10 +52,19 @@ public class CraftingSlot : MonoBehaviour
 
     public void OnRemoveButton()
     {
-        InventoryManager.Instance.Add(item);
-        icon.sprite = null;
-        item.itemAmount = 0;
-        item = null;
-        ClearSlot();
+        Item item_ = Instantiate(item);
+        item_.itemAmount = 1;
+        item.itemAmount -= 1;
+        InventoryManager.Instance.Add(item_);
+        if (item.itemAmount == 0)
+        {
+            CraftingManager.Instance.RemoveCraftingItem(item);
+            ClearSlot();
+            Destroy(item);
+        }
+        else
+        {
+            UpdateAmount();
+        }
     }
 }

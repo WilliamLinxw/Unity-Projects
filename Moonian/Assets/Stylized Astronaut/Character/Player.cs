@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     private bool jumpflag = false;
 
     private int pressE = 1000;
+    private bool isJumping;
+    private bool isGrounded;
 
     void Awake()
     {
@@ -79,12 +81,31 @@ public class Player : MonoBehaviour
 
         if (controller.isGrounded)
         {
+            anim.SetBool("IsGrounded", true);
+            isGrounded = true;
+            anim.SetBool("IsJumping", false);
+            isJumping = false;
+            anim.SetBool("IsFalling", false);
+
+
             ySpeed = -0.5f;
             if (Input.GetButtonDown("Jump"))
             {
+                anim.SetBool("IsJumping", true);
+                isJumping = true;
                 jumpflag = true;
                 Debug.Log("jump");
                 ySpeed = jumpSpeed;
+            }
+        }
+        else
+        {
+            anim.SetBool("IsGrounded", false);
+            isGrounded = false;
+
+            if((isJumping && ySpeed <0) || ySpeed < -2)
+            {
+                anim.SetBool("IsFalling", true);
             }
         }
         if (controller.isGrounded)
