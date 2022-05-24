@@ -21,7 +21,6 @@ public class Item : ScriptableObject
         // use this item...
         Debug.Log("Using" + itemName);
     }
-
     public Item Clone() => new Item {
         id = this.id,
         itemName = this.itemName,

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 201
   itemName: Aspirin
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: fbac7076e3d074c419633060c6729abf, type: 3}
   isInteratable: 1
   isCollectable: 1
   isSpawnable: 0

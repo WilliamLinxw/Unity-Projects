@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     private Animator anim;
     private CharacterController controller;
     private float ySpeed;
+    public Camera cam;
 
     public bool isRunning = false;
     public float speed = 2f;
@@ -19,6 +20,10 @@ public class Player : MonoBehaviour
     private int pressE = 1000;
     private bool isJumping;
     private bool isGrounded;
+    private bool isBackwards;
+    private float camScale = -2f;
+    private int fovMin = 45;
+    private int fovMax = 120;
 
     void Awake()
     {
@@ -50,6 +55,14 @@ public class Player : MonoBehaviour
             pressE = 0;
         }
         pressE += 1;
+
+        if (Input.mouseScrollDelta.y != 0)
+        {
+            float fov = cam.fieldOfView;
+            float deltaFov = Input.mouseScrollDelta.y * camScale;
+            fov += deltaFov;
+            cam.fieldOfView = Mathf.Clamp(fov, fovMin, fovMax);
+        }
     }
 
     void MotionUpdate(float deltaTime)
@@ -68,7 +81,10 @@ public class Player : MonoBehaviour
             {
                 anim.SetInteger("AnimationPar", 2);
             }
-            
+        }
+        else if (Input.GetKey("s"))
+        {
+            anim.SetInteger("AnimationPar", 3);
         }
         else
         {
@@ -114,9 +130,14 @@ public class Player : MonoBehaviour
         }
 
         isRunning = Input.GetKey(KeyCode.LeftShift);
+        isBackwards = Input.GetKey("s");
         if (isRunning)
         {
             speed = 3f;
+        }
+        else if (isBackwards)
+        {
+            speed = 1.5f;
         }
         else
         {
@@ -145,6 +166,7 @@ public class Player : MonoBehaviour
             if (interacted)
             {
                 other.gameObject.SetActive(false);
+                FindObjectOfType<AudioManager>().Play("Pickup_1");
             }
             // Item item = other.gameObject.GetComponent<ItemController>().item;
             // InventoryManager.Instance.Add(item);
@@ -166,6 +188,11 @@ public class Player : MonoBehaviour
             {
                 other.GetComponent<slidingDoor_rec>().Moving_rec = true;
             }
+        }
+
+        if (other.tag == "Base")
+        {
+            PlayerProperty.Instance.isInBase = true;
         }
     }
 }

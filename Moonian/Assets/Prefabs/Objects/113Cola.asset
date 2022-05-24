@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 113
   itemName: Cola
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 10814bc515c83d542b2476b1f2b0f0ee, type: 3}
   isInteratable: 1
   isCollectable: 1
   isSpawnable: 0

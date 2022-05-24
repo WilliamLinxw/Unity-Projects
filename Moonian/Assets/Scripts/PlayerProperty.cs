@@ -23,6 +23,7 @@ public class PlayerProperty : MonoBehaviour
     public float lsHealthRate, lsConsumeRate;
     public bool isInBase, isInVehicle = false;
     public bool isInShelters {get {return _isInShelters;}}
+    public float o2RecoveryRate, lsRecoveryRate;
     bool _isInShelters;
     public HealthBar healthBar;
     public O2Bar o2Bar;
@@ -44,7 +45,7 @@ public class PlayerProperty : MonoBehaviour
 
     void Update()
     {
-        _isInShelters = (isInBase) && (isInVehicle);
+        _isInShelters = (isInBase) || (isInVehicle);
         if (Player.Instance.isRunning)
         {
             _runningConsumingRate = 2;
@@ -109,6 +110,10 @@ public class PlayerProperty : MonoBehaviour
             float ocr = o2ConsumeRate * _runningConsumingRate;
             _currentO2 -= ocr;
         }
+        else
+        {
+            _currentO2 += o2RecoveryRate;
+        }
     }
     public void SupplyO2(float _supply)
     {
@@ -127,6 +132,10 @@ public class PlayerProperty : MonoBehaviour
         if (!_isInShelters)
         {
             _currentLS -= lsConsumeRate;
+        }
+        else
+        {
+            _currentLS += lsRecoveryRate;
         }
     }
     public void SupplyLS(float _supply)

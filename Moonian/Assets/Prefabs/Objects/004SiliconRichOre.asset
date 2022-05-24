@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   itemName: Silicon-Rich Ore
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 1dc11fb87a7124149966b94d236dc458, type: 3}
   isInteratable: 1
   isCollectable: 1
   isSpawnable: 1

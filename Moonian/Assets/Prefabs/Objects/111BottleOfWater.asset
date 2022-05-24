@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 111
   itemName: Bottle of Water
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4c7115d3a6a6e3a41b95d6fdf1ff43c0, type: 3}
   isInteratable: 1
   isCollectable: 1
   isSpawnable: 0

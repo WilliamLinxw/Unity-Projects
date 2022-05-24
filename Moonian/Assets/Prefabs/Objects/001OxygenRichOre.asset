@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   itemName: Oxygen-Rich Ore
-  icon: {fileID: 21300000, guid: 77c1ec9f599acd845ab67c0f8c31d2b0, type: 3}
+  icon: {fileID: 21300000, guid: 2007095d3d7eb4040818e98b4f250d97, type: 3}
   isInteratable: 1
   isCollectable: 1
   isSpawnable: 1

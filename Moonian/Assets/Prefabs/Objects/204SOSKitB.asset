@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 204
   itemName: SOS Kit B
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: d39478c0fd292514789b0d4a9412e174, type: 3}
   isInteratable: 1
   isCollectable: 1
   isSpawnable: 0

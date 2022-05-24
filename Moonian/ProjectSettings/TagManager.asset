@@ -9,6 +9,7 @@ TagManager:
   - Door
   - Door_rec
   - Portal
+  - Base
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - PostProcessingVolume
   - 
   - 
   - 

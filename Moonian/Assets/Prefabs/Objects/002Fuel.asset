@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   itemName: Fuel
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 539ab00884db6514aa8c1f69619f3235, type: 3}
   isInteratable: 1
   isCollectable: 1
   isSpawnable: 1

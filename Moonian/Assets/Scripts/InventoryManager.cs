@@ -90,7 +90,7 @@ public class InventoryManager : MonoBehaviour
     }
     public void Use(Item item, bool inCrafting)
     {
-        if (!inCrafting && item.isInteratable)
+        if (!inCrafting && item.isInteratable && (item is Consumable))
         {
             Items[Items.IndexOf(item)].itemAmount -= 1;
             item.Use();

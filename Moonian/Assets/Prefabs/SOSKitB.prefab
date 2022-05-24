@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1940278135375684496}
   - component: {fileID: 687283750404196785}
   - component: {fileID: 445278696569273090}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SOSKitB
-  m_TagString: Untagged
+  m_TagString: Pickups
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,9 +66,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1940278135375684496}
     m_Modifications:
+    - target: {fileID: 1315037468606724, guid: adb88a6e15f5d6d45aa8ca80785c6bb2, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1511661677094802, guid: adb88a6e15f5d6d45aa8ca80785c6bb2, type: 3}
       propertyPath: m_Name
       value: Case_05_B
+      objectReference: {fileID: 0}
+    - target: {fileID: 1511661677094802, guid: adb88a6e15f5d6d45aa8ca80785c6bb2, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689599483362452, guid: adb88a6e15f5d6d45aa8ca80785c6bb2, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4106913572731772, guid: adb88a6e15f5d6d45aa8ca80785c6bb2, type: 3}
       propertyPath: m_RootOrder
