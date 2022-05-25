@@ -19,6 +19,12 @@ public class portaleffect2: MonoBehaviour
     void Update()
     {
         relativeVector = playerCamera.position - door1.position;
-        this.transform.position = door2.position - relativeVector;
+
+
+        Vector3 pos = this.transform.position;
+        pos.x = relativeVector.z;
+        pos.y = relativeVector.y;
+        pos.z = relativeVector.x;
+        this.transform.position = door2.position + pos;
     }
 }

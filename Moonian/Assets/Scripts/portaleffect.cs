@@ -7,7 +7,8 @@ public class portaleffect : MonoBehaviour
     public Transform door1;
     public Transform door2;
     public Transform playerCamera;
-    public Vector3 relativeVector;
+    private Vector3 relativeVector;
+    private Vector3 relativeVectorRotate;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,15 @@ public class portaleffect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         relativeVector = playerCamera.position - door1.position;
-        this.transform.position = door2.position - relativeVector;
+
+
+        Vector3 pos = this.transform.position;
+        pos.x = relativeVector.z;
+        pos.y = relativeVector.y;
+        pos.z = relativeVector.x;
+        this.transform.position = door2.position + pos;
+
     }
 }
