@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fed4479faf87aa64188b2ebce040fdbb, type: 3}
+  m_Name: RWater2
+  m_EditorClassIdentifier: 
+  Source_items:
+  - {fileID: 11400000, guid: e94e15301186d38429cc78799aab193f, type: 2}
+  - {fileID: 11400000, guid: e83cb31c1f8340c4897f5e0a3c333468, type: 2}
+  Source_amount: 0100000002000000
+  Out_items:
+  - {fileID: 11400000, guid: 2f3451bb40444794597ad36ff225f21d, type: 2}
+  Out_amount: 02000000
+  requireTable: 0

@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
+    public bool disabled = false;
+
     public static Player Instance;
     private Animator anim;
     private CharacterController controller;
@@ -43,7 +45,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        MotionUpdate(Time.deltaTime);
+        if (!disabled)
+        {
+            MotionUpdate(Time.deltaTime);
+        }
+        
         
         if (EventSystem.current.IsPointerOverGameObject())
         {

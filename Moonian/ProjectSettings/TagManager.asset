@@ -10,6 +10,11 @@ TagManager:
   - Door_rec
   - Portal
   - Base
+  - portal2
+  - portal 1 screen 1
+  - portal 1 screen 2
+  - portal 2 screen 1
+  - portal 2 screen 2
   layers:
   - Default
   - TransparentFX

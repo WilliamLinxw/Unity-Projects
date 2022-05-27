@@ -25,6 +25,6 @@ public class portaleffect2: MonoBehaviour
         pos.x = relativeVector.z;
         pos.y = relativeVector.y;
         pos.z = relativeVector.x;
-        this.transform.position = door2.position + pos;
+        this.transform.position = door2.position - pos;
     }
 }

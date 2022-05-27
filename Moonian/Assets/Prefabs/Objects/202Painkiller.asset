@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 202
   itemName: Painkiller
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 8add6c3643f0bf34a8b7d8c5cdb40124, type: 3}
   isInteratable: 1
   isCollectable: 1
   isSpawnable: 0
