@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 103
   itemName: O3
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 30b3ade48f77fcd4bb5cf15ad741f25f, type: 3}
   isInteratable: 1
   isCollectable: 1
   isSpawnable: 0

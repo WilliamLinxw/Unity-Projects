@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 
     public bool isRunning = false;
     public float speed = 2f;
+    public float speedDefault = 2f;
     public float turnSpeed;
     public float jumpSpeed;
     private Vector3 movementDirection = Vector3.zero;
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
     private float camScale = -2f;
     private int fovMin = 45;
     private int fovMax = 120;
+    private float overweightVelRatio = 0.6f;
 
     void Awake()
     {
@@ -45,6 +47,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        speed = speedDefault;
+        if (PlayerProperty.Instance.isOverweight)
+        {
+            speed = speed * overweightVelRatio;
+        }
+        
         if (!disabled)
         {
             MotionUpdate(Time.deltaTime);

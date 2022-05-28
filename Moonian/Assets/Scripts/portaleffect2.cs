@@ -7,7 +7,7 @@ public class portaleffect2: MonoBehaviour
     public Transform door1;
     public Transform door2;
     public Transform playerCamera;
-    public Vector3 relativeVector;
+    private Vector3 relativeVector;
 
     // Start is called before the first frame update
     void Start()
@@ -22,9 +22,12 @@ public class portaleffect2: MonoBehaviour
 
 
         Vector3 pos = this.transform.position;
-        pos.x = relativeVector.z;
+        pos.x = relativeVector.x;
         pos.y = relativeVector.y;
-        pos.z = relativeVector.x;
-        this.transform.position = door2.position - pos;
+        pos.z = relativeVector.z;
+        this.transform.position = door2.position + pos;
+
+        var rotationVector = playerCamera.transform.rotation.eulerAngles;
+        this.transform.rotation = Quaternion.Euler(rotationVector);
     }
 }

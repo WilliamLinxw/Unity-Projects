@@ -7,8 +7,12 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager Instance;
     public List<Item> Items = new List<Item>();
     public int maxRoom = 40;
+    public float totalWeight
+    {
+        get { return _totalWeight;}
+    }
 
-    private float totalWeight = 0;
+    private float _totalWeight = 0;
     private float maxWeight = 180;
 
     public delegate void OnItemChanged();
@@ -32,10 +36,14 @@ public class InventoryManager : MonoBehaviour
             // TODO alerts required
             return;
         }
-        else if (totalWeight > maxWeight)
+        else if (_totalWeight > maxWeight)
         {
             Debug.Log("Overweight!");
-            // TODO some measures later; currently nothing would happen
+            PlayerProperty.Instance.isOverweight = true;
+        }
+        else
+        {
+            PlayerProperty.Instance.isOverweight = false;
         }
         bool itemplaced = false;
         for (int i = 0; i < Items.Count; i++)
@@ -51,29 +59,9 @@ public class InventoryManager : MonoBehaviour
         {
             Items.Add(Instantiate(item));
         }    
-        /*
-        if (Items.Contains(item))
-        {
-            todo item stacks
-            if (item.itemAmount + Items[Items.IndexOf(item)].itemAmount < item.maxStack)
-            {
-                Items[Items.IndexOf(item)].itemAmount += item.itemAmount;
-            }
-            else
-            {
-                item.itemAmount = Items[Items.IndexOf(item)].itemAmount + item.itemAmount - item.maxStack;
-                Items[Items.IndexOf(item)].itemAmount = item.maxStack;
-                Add(item);
-            }
-            Items[Items.IndexOf(item)].itemAmount += item.itemAmount;
-        }
-        else
-        {
-            // item.itemAmount = 1;
-            Items.Add(Instantiate(item));
-        }
-        */
-        float newWeight = totalWeight + item.weight;
+        
+        _totalWeight += item.weight;
+        Debug.Log(totalWeight);
         if (onItemChangedCallback != null)
         {
             onItemChangedCallback.Invoke();
@@ -82,7 +70,7 @@ public class InventoryManager : MonoBehaviour
     public void Remove(Item item)
     {
         Items.Remove(item);
-        totalWeight -= item.weight * item.itemAmount;
+        _totalWeight -= item.weight * item.itemAmount;
         if (onItemChangedCallback != null)
         {
             onItemChangedCallback.Invoke();
@@ -98,13 +86,14 @@ public class InventoryManager : MonoBehaviour
         else if (inCrafting && item.isCollectable)
         {
             Items[Items.IndexOf(item)].itemAmount -= 1;
+
             CraftingManager.Instance.AddCraftingItem(item);
         }
         if (Items[Items.IndexOf(item)].itemAmount < 1)
         {
             Remove(item);
         }
-        // use switch
+        _totalWeight -= item.weight;
     }
 
 }

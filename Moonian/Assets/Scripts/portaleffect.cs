@@ -8,7 +8,7 @@ public class portaleffect : MonoBehaviour
     public Transform door2;
     public Transform playerCamera;
     private Vector3 relativeVector;
-    private Vector3 relativeVectorRotate;
+    public Transform detection;
 
     // Start is called before the first frame update
     void Start()
@@ -29,5 +29,27 @@ public class portaleffect : MonoBehaviour
         pos.z = relativeVector.z;
         this.transform.position = door2.position + pos;
 
+        var rotationVector = playerCamera.transform.rotation.eulerAngles;
+        this.transform.rotation = Quaternion.Euler(rotationVector);
+
+        checkPortal();
+
+    }
+
+    void checkPortal()
+    {
+        RaycastHit hit;
+ 
+        if (Physics.SphereCast(this.transform.position, 20f, transform.forward, out hit, 20f))
+        {
+            Debug.Log("check");
+            if (hit.collider.gameObject.tag == "portal 2")
+            {
+                Debug.Log("portal 2 detected");
+                detection = hit.transform;
+                detection.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
+
+        }
     }
 }

@@ -19,11 +19,11 @@ public class teleportTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "portal 1 screen 1")
+        if (other.tag == "portal 1")
         {
             if(portal2_enter == false)
             {
-                StartCoroutine("Teleport12_1");
+                StartCoroutine("Teleport12");
                 portal1_enter = true;
             }
             else
@@ -33,11 +33,11 @@ public class teleportTrigger : MonoBehaviour
             
         }
             
-        if(other.tag == "portal 2 screen 1")
+        if(other.tag == "portal 2")
         {
             if(portal1_enter == false)
             {
-                StartCoroutine("Teleport21_1");
+                StartCoroutine("Teleport21");
                 portal2_enter = true;
             }
             else
@@ -48,7 +48,7 @@ public class teleportTrigger : MonoBehaviour
         }
 
     }
-    IEnumerator Teleport12_1()
+    IEnumerator Teleport12()
     {
         player.disabled = true;
         yield return new WaitForSeconds(0.01f);
@@ -63,7 +63,7 @@ public class teleportTrigger : MonoBehaviour
         player.disabled = false;
     }
 
-    IEnumerator Teleport21_1()
+    IEnumerator Teleport21()
     {
         player.disabled = true;
         yield return new WaitForSeconds(0.01f);

@@ -52,7 +52,7 @@ public class PickupGenerator : MonoBehaviour
 
     private bool ProbToBool(float pr)
     {
-        float rand = Random.Range(0f, 0.5f);
+        float rand = Random.Range(0f, 1f);
         if (rand <= pr) return true;
         else return false;
     }
