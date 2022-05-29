@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThirdPersonCamera : MonoBehaviour
 {
-    private const float Y_ANGLE_MIN = 0.0f;
+    private const float Y_ANGLE_MIN = -60.0f;
     private const float Y_ANGLE_MAX = 60.0f;
 
     public Transform lookAt;
@@ -53,13 +53,12 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, Target.position - transform.position, out hit, 20f))
+        if (Physics.Raycast(transform.position, Target.position - transform.position, out hit, 25f))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            Debug.Log(hit.collider.gameObject.tag);
             if (hit.collider.gameObject.tag != "Player")
             {
-                Debug.Log("not player");
+                //Debug.Log("not player");
                 Obstruction = hit.transform;
                 Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
 
@@ -70,7 +69,7 @@ public class ThirdPersonCamera : MonoBehaviour
             } 
             else
             {
-                Debug.Log("player");
+                //Debug.Log("player");
                 Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
                 if (Vector3.Distance(transform.position, Target.position) < 4.5f)
                 {

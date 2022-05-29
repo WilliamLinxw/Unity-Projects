@@ -55,6 +55,7 @@ public class teleportTrigger : MonoBehaviour
 
         Vector3 position = this.transform.position;
         position.x = portal2.position.x;
+        position.y = portal2.position.y - 5f;
         position.z = portal2.position.z;
         gameObject.transform.position = position;
 
@@ -70,6 +71,7 @@ public class teleportTrigger : MonoBehaviour
 
         Vector3 position = this.transform.position;
         position.x = portal1.position.x;
+        position.y = portal1.position.y - 5f;
         position.z = portal1.position.z;
         gameObject.transform.position = position;
 
