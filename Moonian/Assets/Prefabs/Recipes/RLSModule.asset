@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: RLSModule
   m_EditorClassIdentifier: 
   Source_items:
-  - {fileID: 11400000, guid: 6c2a09628cc39284aad9f16094c25dad, type: 2}
-  - {fileID: 11400000, guid: 91025644e8e0bf64bb61012bbfcb33e5, type: 2}
   - {fileID: 11400000, guid: e83cb31c1f8340c4897f5e0a3c333468, type: 2}
   - {fileID: 11400000, guid: 635352cad70173449851887edcae8a54, type: 2}
-  Source_amount: 040000000400000001000000
+  - {fileID: 11400000, guid: 91025644e8e0bf64bb61012bbfcb33e5, type: 2}
+  - {fileID: 11400000, guid: 6c2a09628cc39284aad9f16094c25dad, type: 2}
+  Source_amount: 02000000010000000200000003000000
   Out_items:
   - {fileID: 11400000, guid: f8fda45fbaad919419d6ca622c901980, type: 2}
   Out_amount: 01000000

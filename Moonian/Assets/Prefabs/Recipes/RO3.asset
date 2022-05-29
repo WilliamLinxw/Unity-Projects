@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Source_items:
   - {fileID: 11400000, guid: 001eab7765fc77b4dbed31eb0326b650, type: 2}
-  Source_amount: 06000000
+  - {fileID: 11400000, guid: 2b6ac9cc4417ab440b373ce4962a02a1, type: 2}
+  Source_amount: 0600000002000000
   Out_items:
   - {fileID: 11400000, guid: 3bc2b6e303015aa4c8ffe83a8d48003b, type: 2}
   Out_amount: 04000000

@@ -11,10 +11,10 @@ public class portal1incam1 : MonoBehaviour
     private bool isVisible(Camera cam, GameObject target)
     {
         var planes = GeometryUtility.CalculateFrustumPlanes(cam);
-        Debug.Log("camera:" + cam.transform.position);
-        Debug.Log("portal:" + target.transform.position);
+        //Debug.Log("camera:" + cam.transform.position);
+        //Debug.Log("portal:" + target.transform.position);
         float distance = Vector3.Distance(cam.transform.position, target.transform.position);
-        Debug.Log("distance:" + distance);
+        //Debug.Log("distance:" + distance);
 
         // center
         Vector3 position_center = target.transform.position;

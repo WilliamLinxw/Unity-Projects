@@ -11,7 +11,6 @@ public class ThirdPersonCamera : MonoBehaviour
     public Transform camTransform;
     public float distance = 5.0f;
     public Transform Target;
-    public float alpha = 0.5f;
 
     public Transform Obstruction;
     float zoomSpeed = 2f;
@@ -20,11 +19,12 @@ public class ThirdPersonCamera : MonoBehaviour
     private float currentY = 45.0f;
     private float sensitivityX = 20.0f;
     private float sensitivityY = 20.0f;
+    private bool changed = false;
 
     private void Start()
     {
         camTransform = transform;
-        Obstruction = Target ;
+        Obstruction = Target;
     }
 
     private void LateUpdate()
@@ -40,25 +40,44 @@ public class ThirdPersonCamera : MonoBehaviour
         currentY -= Input.GetAxis("Mouse Y");
 
         currentY = Mathf.Clamp(currentY, Y_ANGLE_MIN, Y_ANGLE_MAX);
+
         transform.LookAt(Target);
 
         Vector3 dir = new Vector3(0, 0, -distance);
         Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
         camTransform.position = lookAt.position + rotation * dir;
         camTransform.LookAt(lookAt.position);
-        ViewObstructed();
     }
 
     void ViewObstructed()
     {
         RaycastHit hit;
+        Debug.Log("target:" + Target.position);
+        Debug.Log("transform:" + transform.position);
 
-        if (Physics.Raycast(transform.position, Target.position - transform.position, out hit, 25f))
+        
+        if (!changed)
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+            Vector3 position = Target.position;
+            position.x = Target.position.x;
+            position.y = Target.position.y+2.2f;
+            position.z = Target.position.z;
+            Target.position = position;
+            changed = true;
+        }
+        
+
+        Debug.Log("target after:" + Target.position);
+        Vector3 direction = Target.position - transform.position;
+        Debug.Log("direction:" + direction);
+        Debug.Log("forward:" + transform.TransformDirection(Vector3.forward));
+
+        if (Physics.Raycast(transform.position, Target.position - transform.position, out hit, 15f))
+        {
+            Debug.DrawRay(transform.position, direction * hit.distance, Color.yellow);
             if (hit.collider.gameObject.tag != "Player")
             {
-                //Debug.Log("not player");
+                Debug.Log("not player");
                 Obstruction = hit.transform;
                 Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
 
@@ -69,7 +88,7 @@ public class ThirdPersonCamera : MonoBehaviour
             } 
             else
             {
-                //Debug.Log("player");
+                Debug.Log("player");
                 Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
                 if (Vector3.Distance(transform.position, Target.position) < 4.5f)
                 {
@@ -78,13 +97,5 @@ public class ThirdPersonCamera : MonoBehaviour
                     
             }
         }
-    }
-
-    void changeAlpha(Material mat, float alphaVal)
-    {
-        Debug.Log("changed");
-        Color oldColor = mat.color;
-        Color newColor = new Color(oldColor.r, oldColor.g, oldColor.b, alphaVal);
-        mat.SetColor("_Color", newColor);
     }
 }

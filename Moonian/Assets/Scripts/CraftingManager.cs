@@ -12,12 +12,24 @@ public class CraftingManager : MonoBehaviour
     public delegate void OnItemChanged();
     public OnItemChanged onItemChangedCallback;
     public CraftingUI craftingUI;
+
     public List<Item> SortedCrafting;
+    private List<Recipe> Recipes;
+    public int maxAmount = 0;
+    public int currentAmount = 0;
+    private Recipe rcp = null;
+
 
     private void Awake()
     {
         Instance = this;
         craftingUI.Init();
+        Recipes = GetComponent<CraftingRecipes>().Recipes;
+    }
+
+    private void Update() 
+    {
+        currentAmount = CraftingUI.Instance.currentAmount;
     }
 
     public void AddCraftingItem(Item item)
@@ -41,7 +53,7 @@ public class CraftingManager : MonoBehaviour
         }
         if (onItemChangedCallback != null)
         {
-            CheckMaxAmount();
+            CheckRecipes();
             onItemChangedCallback.Invoke();
         }
     }
@@ -51,7 +63,7 @@ public class CraftingManager : MonoBehaviour
         {
             return;
         }
-        Debug.Log(item.itemAmount);
+        // Debug.Log(item.itemAmount);
         for (int i = 0; i < Crafting.Count; i++)
         {
             if (Crafting[i] != null && item.id == Crafting[i].id)
@@ -63,24 +75,93 @@ public class CraftingManager : MonoBehaviour
         }
         if (onItemChangedCallback != null)
         {
+            CheckRecipes();
             onItemChangedCallback.Invoke();
         }
     }
 
-    public int CheckRecipes()
+    public void CheckRecipes()
     {
         SortedCrafting = new List<Item>(Crafting);
         SortedCrafting.Sort(SortFunc);
-        return 0;
+        foreach (Recipe r in Recipes)
+        {
+            if (r.Source_items.Count != SortedCrafting.Count)
+            {
+                continue;
+            }
+            int checkFlag = 0;
+            for (int i = 0; i < r.Source_items.Count; i++)
+            {
+                if (r.Source_items[i].id == SortedCrafting[i].id)
+                {
+                    checkFlag += 1;
+                }
+            }
+            if (checkFlag == r.Source_items.Count)
+            {
+                // a recipe is found => then check the amounts
+                Debug.Log("Current recipe: " + r.name);
+                rcp = r;
+                List<int> craftingAmount = new List<int>();
+                foreach (Item it in SortedCrafting)
+                {
+                    craftingAmount.Add(it.itemAmount);
+                }
+                maxAmount = AmountListComp(r.Source_amount, craftingAmount);
+                // Debug.Log(maxAmount);
+                maxAmount = Mathf.Max(0, maxAmount);
+            }
+        }
     }
-    public int CheckMaxAmount()
-    {
-        CheckRecipes();
-        return 0;
-    }
+
     public void GenerateCraftedItems()
     {
+        if (rcp != null)
+        {
+            //todo check worktable; ignored by now!
+            for (int i = 0; i < rcp.Out_items.Count; i++)
+            {
+                Crafted.Add(Instantiate(rcp.Out_items[i]));
+                Crafted[i].itemAmount = rcp.Out_amount[i] * currentAmount;
+            }
+        }
 
+    }
+    public void AddCraftedItems()
+    {
+        /*
+        todos:
+        (1) Worktable
+        (2) Add generated items to UI and its pickup
+        (3) Remove ingredients in crafting bar
+        */
+        foreach (Item it in Crafted)
+        {
+            
+        }
+        // Item item_ = Instantiate(item);
+        // int item_ind = CheckContainsItem(item_.itemName, Crafting);
+        // if (Crafting.Count >= maxCraftingRoom && item_ind != -1)
+        // {
+        //     Debug.Log("No enough crafting room!");
+        //     item_.itemAmount = 1;
+        //     InventoryManager.Instance.Add(item_);
+        // }
+        // if (item_ind == -1)
+        // {
+        //     item_.itemAmount = 1;
+        //     Crafting.Add(item_);
+        // }
+        // else
+        // {
+        //     Crafting[item_ind].itemAmount += 1;
+        // }
+        // if (onItemChangedCallback != null)
+        // {
+        //     CheckRecipes();
+        //     onItemChangedCallback.Invoke();
+        // }
     }
     
     int CheckContainsItem(string itemName, List<Item> list)
@@ -103,4 +184,21 @@ public class CraftingManager : MonoBehaviour
             return 1;
         return 0;
     }
+
+    private int AmountListComp(List<int> a, List<int> b)
+    {
+        if (a.Count != b.Count) return -1;
+        else
+        {
+            int amt = 255;
+            for (int i = 0; i < a.Count; i++)
+            {
+                amt = Mathf.Min(amt, (int)b[i]/a[i]);
+            }
+            Debug.Log("amt:" + amt.ToString());
+            if (amt < 1) return 0;
+            else return amt;
+        }
+    }
+
 }

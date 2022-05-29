@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: RWater2
   m_EditorClassIdentifier: 
   Source_items:
-  - {fileID: 11400000, guid: e94e15301186d38429cc78799aab193f, type: 2}
   - {fileID: 11400000, guid: e83cb31c1f8340c4897f5e0a3c333468, type: 2}
-  Source_amount: 0100000002000000
+  - {fileID: 11400000, guid: e94e15301186d38429cc78799aab193f, type: 2}
+  Source_amount: 0200000001000000
   Out_items:
   - {fileID: 11400000, guid: 2f3451bb40444794597ad36ff225f21d, type: 2}
   Out_amount: 02000000

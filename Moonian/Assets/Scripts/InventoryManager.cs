@@ -61,7 +61,7 @@ public class InventoryManager : MonoBehaviour
         }    
         
         _totalWeight += item.weight;
-        Debug.Log(totalWeight);
+        // Debug.Log(totalWeight);
         if (onItemChangedCallback != null)
         {
             onItemChangedCallback.Invoke();
