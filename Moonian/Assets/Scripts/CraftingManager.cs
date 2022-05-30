@@ -30,6 +30,8 @@ public class CraftingManager : MonoBehaviour
     private void Update() 
     {
         currentAmount = CraftingUI.Instance.currentAmount;
+        Crafting = Remove0Items(Crafting);
+        Crafted = Remove0Items(Crafted);
     }
 
     public void AddCraftingItem(Item item)
@@ -82,6 +84,7 @@ public class CraftingManager : MonoBehaviour
 
     public void CheckRecipes()
     {
+        maxAmount = 0;
         SortedCrafting = new List<Item>(Crafting);
         SortedCrafting.Sort(SortFunc);
         foreach (Recipe r in Recipes)
@@ -111,6 +114,7 @@ public class CraftingManager : MonoBehaviour
                 maxAmount = AmountListComp(r.Source_amount, craftingAmount);
                 // Debug.Log(maxAmount);
                 maxAmount = Mathf.Max(0, maxAmount);
+                break;
             }
         }
     }
@@ -120,48 +124,55 @@ public class CraftingManager : MonoBehaviour
         if (rcp != null)
         {
             //todo check worktable; ignored by now!
+            if (rcp.requireTable && !Player.Instance.atWorktable)
+            {
+                return;  // at worktable not satisfied -> directly return
+            }
             for (int i = 0; i < rcp.Out_items.Count; i++)
             {
-                Crafted.Add(Instantiate(rcp.Out_items[i]));
-                Crafted[i].itemAmount = rcp.Out_amount[i] * currentAmount;
+                int flag = 0;
+                foreach (Item c in Crafted)
+                {
+                    if (c.id == rcp.Out_items[i].id)
+                    {
+                        c.itemAmount += rcp.Out_amount[i] * currentAmount;
+                        flag = 1;
+                        break;
+                    }
+                }
+                if (flag == 0)
+                {
+                    Crafted.Add(Instantiate(rcp.Out_items[i]));
+                    Crafted[i].itemAmount = rcp.Out_amount[i] * currentAmount;
+                }
             }
+            AddCraftedItems();
+            // then remove the required crafting items
+            for (int j = 0; j < rcp.Source_items.Count; j++)
+            {
+                for (int k = 0; k < Crafting.Count; k++)
+                {
+                    if (Crafting[k].id == rcp.Source_items[j].id)
+                    {
+                        Crafting[k].itemAmount -= rcp.Source_amount[j] * currentAmount;
+                        if (Crafting[k].itemAmount == 0)
+                        {
+                            Crafting.RemoveAt(k);
+                        }
+                        CraftingUI.Instance.UpdateCraftingUI();
+                        break;
+                    }
+                }
+            }
+            rcp = null;
+            CheckRecipes();
+            CraftingUI.Instance.AmtCheck();
         }
 
     }
     public void AddCraftedItems()
     {
-        /*
-        todos:
-        (1) Worktable
-        (2) Add generated items to UI and its pickup
-        (3) Remove ingredients in crafting bar
-        */
-        foreach (Item it in Crafted)
-        {
-            
-        }
-        // Item item_ = Instantiate(item);
-        // int item_ind = CheckContainsItem(item_.itemName, Crafting);
-        // if (Crafting.Count >= maxCraftingRoom && item_ind != -1)
-        // {
-        //     Debug.Log("No enough crafting room!");
-        //     item_.itemAmount = 1;
-        //     InventoryManager.Instance.Add(item_);
-        // }
-        // if (item_ind == -1)
-        // {
-        //     item_.itemAmount = 1;
-        //     Crafting.Add(item_);
-        // }
-        // else
-        // {
-        //     Crafting[item_ind].itemAmount += 1;
-        // }
-        // if (onItemChangedCallback != null)
-        // {
-        //     CheckRecipes();
-        //     onItemChangedCallback.Invoke();
-        // }
+        CraftingUI.Instance.UpdateCraftedUI();
     }
     
     int CheckContainsItem(string itemName, List<Item> list)
@@ -174,6 +185,17 @@ public class CraftingManager : MonoBehaviour
             }
         }
         return -1;
+    }
+
+    public void DropItems()
+    {
+        Crafting = new List<Item>();
+        SortedCrafting = new List<Item>();
+        Crafted = new List<Item>();
+        maxAmount = 0;
+
+        CraftingUI.Instance.UpdateCraftingUI();
+        CraftingUI.Instance.UpdateCraftedUI();
     }
 
     private int SortFunc(Item a, Item b)
@@ -195,10 +217,20 @@ public class CraftingManager : MonoBehaviour
             {
                 amt = Mathf.Min(amt, (int)b[i]/a[i]);
             }
-            Debug.Log("amt:" + amt.ToString());
             if (amt < 1) return 0;
             else return amt;
         }
     }
 
+    private List<Item> Remove0Items(List<Item> l)
+    {
+        foreach (Item i in l)
+        {
+            if (i.itemAmount <= 0)
+            {
+                l.Remove(i);
+            }
+        }
+        return l;
+    }
 }

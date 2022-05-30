@@ -29,6 +29,9 @@ public class Player : MonoBehaviour
     private int fovMax = 120;
     private float overweightVelRatio = 0.6f;
 
+    public bool atWorktable {get {return _atWorktable;}}
+    private bool _atWorktable = false;
+
     void Awake()
     {
         Instance = this;
@@ -52,6 +55,7 @@ public class Player : MonoBehaviour
         {
             speed = speed * overweightVelRatio;
         }
+
         
         if (!disabled)
         {
@@ -207,6 +211,25 @@ public class Player : MonoBehaviour
         if (other.tag == "Base")
         {
             PlayerProperty.Instance.isInBase = true;
+        }
+
+        if (other.tag == "Worktable")
+        {
+            _atWorktable = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other) 
+    {
+        // reset the InBase and AtWorktable to false
+        if (other.tag == "Base")
+        {
+            PlayerProperty.Instance.isInBase = false;
+        }
+
+        if (other.tag == "Worktable")
+        {
+            _atWorktable = false;
         }
     }
 }

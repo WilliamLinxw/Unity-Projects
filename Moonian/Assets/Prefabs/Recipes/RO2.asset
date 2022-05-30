@@ -18,4 +18,4 @@ MonoBehaviour:
   Out_items:
   - {fileID: 11400000, guid: e94e15301186d38429cc78799aab193f, type: 2}
   Out_amount: 04000000
-  requireTable: 0
+  requireTable: 1

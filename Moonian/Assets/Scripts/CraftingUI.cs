@@ -7,9 +7,11 @@ public class CraftingUI : MonoBehaviour
     CraftingManager crafting;
     InventorySlot[] i_slots;
     CraftingSlot[] c_slots;
+    CraftedSlot[] d_slots;
     public GameObject craftAmtText;
     public static CraftingUI Instance;
     public int currentAmount = 0;
+    public Button CraftButton;
 
     public Transform inventoryItemsParent;
     public Transform craftingItemsParent;
@@ -24,6 +26,11 @@ public class CraftingUI : MonoBehaviour
     void Update()
     {
         AmtCheck();
+        if (currentAmount <= 0)
+        {
+            CraftButton.interactable = false;
+        }
+        else CraftButton.interactable = true;
     }
 
     public void Init()
@@ -32,10 +39,10 @@ public class CraftingUI : MonoBehaviour
         inventory.onItemChangedCallback += UpdateInventoryUI;
         crafting = GameObject.Find("CraftingManager").GetComponent<CraftingManager>();
         crafting.onItemChangedCallback += UpdateCraftingUI;
-        crafting.onItemChangedCallback += UpdateCraftedUI;
 
         i_slots = inventoryItemsParent.GetComponentsInChildren<InventorySlot>();
         c_slots = craftingItemsParent.GetComponentsInChildren<CraftingSlot>();
+        d_slots = craftingItemsParent.GetComponentsInChildren<CraftedSlot>();
     }
 
     void UpdateInventoryUI()
@@ -52,11 +59,11 @@ public class CraftingUI : MonoBehaviour
             }
         }
     }
-    void UpdateCraftingUI()
+    public void UpdateCraftingUI()
     {
         for (int i = 0; i < c_slots.Length; i++)
         {
-            if (i < crafting.Crafting.Count)
+            if (i < crafting.Crafting.Count && crafting.Crafting[i].itemAmount >= 1)
             {
                 c_slots[i].AddItem(crafting.Crafting[i]);
             }
@@ -66,9 +73,19 @@ public class CraftingUI : MonoBehaviour
             }
         }
     }
-    void UpdateCraftedUI()
+    public void UpdateCraftedUI()
     {
-        
+        for (int i = 0; i < d_slots.Length; i++)
+        {
+            if (i < crafting.Crafted.Count)
+            {
+                d_slots[i].AddItem(crafting.Crafted[i]);
+            }
+            else
+            {
+                d_slots[i].ClearSlot();
+            }
+        }
     }
 
     public void AmtIncrement()
@@ -91,7 +108,7 @@ public class CraftingUI : MonoBehaviour
         }
     }
 
-    private void AmtCheck()
+    public void AmtCheck()
     {
         int curAmt = int.Parse(craftAmtText.GetComponent<Text>().text);
         if (curAmt > CraftingManager.Instance.maxAmount)
@@ -99,5 +116,10 @@ public class CraftingUI : MonoBehaviour
             craftAmtText.GetComponent<Text>().text = CraftingManager.Instance.maxAmount.ToString();
             currentAmount = CraftingManager.Instance.maxAmount;
         }
+    }
+
+    public void OnDropButton()
+    {
+        CraftingManager.Instance.DropItems();
     }
 }

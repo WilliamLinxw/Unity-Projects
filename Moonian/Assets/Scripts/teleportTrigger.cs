@@ -21,42 +21,33 @@ public class teleportTrigger : MonoBehaviour
     {
         if (other.tag == "portal 1")
         {
-            if(portal2_enter == false)
-            {
-                StartCoroutine("Teleport12");
-                portal1_enter = true;
-            }
-            else
-            {
-                portal2_enter = false;
-            }
+
+            StartCoroutine("Teleport12");
+
             
         }
             
         if(other.tag == "portal 2")
         {
-            if(portal1_enter == false)
-            {
-                StartCoroutine("Teleport21");
-                portal2_enter = true;
-            }
-            else
-            {
-                portal1_enter = false;
-            }
+
+            StartCoroutine("Teleport21");
+
             
         }
 
     }
     IEnumerator Teleport12()
     {
+        float side = portal1.transform.position.z - player.transform.position.z;
+        Debug.Log(side);
+        Debug.Log(Mathf.Sign(side));
         player.disabled = true;
         yield return new WaitForSeconds(0.01f);
 
         Vector3 position = this.transform.position;
         position.x = portal2.position.x;
-        position.y = portal2.position.y - 5f;
-        position.z = portal2.position.z;
+        position.y = portal2.position.y - 3f;
+        position.z = portal2.position.z + Mathf.Sign(side) * 1f;
         gameObject.transform.position = position;
 
         yield return new WaitForSeconds(0.01f);
@@ -66,13 +57,17 @@ public class teleportTrigger : MonoBehaviour
 
     IEnumerator Teleport21()
     {
+        float side = portal2.transform.position.z - player.transform.position.z;
+        Debug.Log(side);
+        Debug.Log(Mathf.Sign(side));
+
         player.disabled = true;
         yield return new WaitForSeconds(0.01f);
 
         Vector3 position = this.transform.position;
         position.x = portal1.position.x;
-        position.y = portal1.position.y - 5f;
-        position.z = portal1.position.z;
+        position.y = portal1.position.y - 3f;
+        position.z = portal1.position.z + Mathf.Sign(side) * 1f;
         gameObject.transform.position = position;
 
         yield return new WaitForSeconds(0.01f);

@@ -28,6 +28,7 @@ public class portaleffect2: MonoBehaviour
         this.transform.position = door2.position + pos;
 
         var rotationVector = playerCamera.transform.rotation.eulerAngles;
+        rotationVector.x -= 10f;
         this.transform.rotation = Quaternion.Euler(rotationVector);
     }
 }

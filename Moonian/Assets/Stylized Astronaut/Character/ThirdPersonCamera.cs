@@ -9,7 +9,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
     public Transform lookAt;
     public Transform camTransform;
-    public float distance = 5.0f;
+    public float distance = 2.0f;
     public Transform Target;
 
     public Transform Obstruction;
@@ -52,50 +52,64 @@ public class ThirdPersonCamera : MonoBehaviour
     void ViewObstructed()
     {
         RaycastHit hit;
-        Debug.Log("target:" + Target.position);
-        Debug.Log("transform:" + transform.position);
+        //Debug.Log("target:" + Target.position);
+        //Debug.Log("transform:" + transform.position);
 
         
         if (!changed)
         {
             Vector3 position = Target.position;
             position.x = Target.position.x;
-            position.y = Target.position.y+2.2f;
+            position.y = Target.position.y+1.1f;
             position.z = Target.position.z;
             Target.position = position;
             changed = true;
         }
         
 
-        Debug.Log("target after:" + Target.position);
+        //Debug.Log("target after:" + Target.position);
         Vector3 direction = Target.position - transform.position;
-        Debug.Log("direction:" + direction);
-        Debug.Log("forward:" + transform.TransformDirection(Vector3.forward));
+        //Debug.Log("direction:" + direction);
+        //Debug.Log("forward:" + transform.TransformDirection(Vector3.forward));
 
-        if (Physics.Raycast(transform.position, Target.position - transform.position, out hit, 15f))
+        if (Physics.Raycast(transform.position, Target.position - transform.position, out hit, 13f))
         {
             Debug.DrawRay(transform.position, direction * hit.distance, Color.yellow);
-            if (hit.collider.gameObject.tag != "Player")
+            if (hit.collider.gameObject.tag != "Base" && hit.collider.gameObject.tag != "Terrain")
             {
-                Debug.Log("not player");
-                Obstruction = hit.transform;
-                Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-
-                if (Vector3.Distance(Obstruction.position, transform.position) >= 3f && Vector3.Distance(transform.position, Target.position) >= 1.5f)
+                if (hit.collider.gameObject.tag != "Player")
                 {
-                    transform.Translate(Vector3.forward * zoomSpeed * Time.deltaTime);
-                }
-            } 
-            else
-            {
-                Debug.Log("player");
-                Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-                if (Vector3.Distance(transform.position, Target.position) < 4.5f)
-                {
-                    transform.Translate(Vector3.back * zoomSpeed * Time.deltaTime);
-                }
+                    //Debug.Log("not player");
+                    Obstruction = hit.transform;
+                    if (Obstruction.gameObject.GetComponent<MeshRenderer>() != null)
+                    {
+                        Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                    }
                     
+                    //Debug.Log("distance obstruction to transform:" + Vector3.Distance(Obstruction.position, transform.position));
+                    //Debug.Log("distance target to transform:" + Vector3.Distance(transform.position, Target.position));
+                    //if (Vector3.Distance(Obstruction.position, transform.position) >= 3f && Vector3.Distance(transform.position, Target.position) >= 1.5f)
+                    //{
+                    //    Debug.Log("zoom");
+                    //    transform.Translate(Vector3.forward * zoomSpeed * Time.deltaTime);
+                    //}
+                }
+                else
+                {
+                    //Debug.Log("player");
+                    if (Obstruction.gameObject.GetComponent<MeshRenderer>() != null)
+                    {
+                        Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                    }
+                    
+                    //if (Vector3.Distance(transform.position, Target.position) < 4.5f)
+                    //{
+                    //    transform.Translate(Vector3.back * zoomSpeed * Time.deltaTime);
+                    //}
+
+                }
             }
+            
         }
     }
 }

@@ -68,6 +68,12 @@ public class PlayerProperty : MonoBehaviour
         checkHealthState = CheckPropRange(_currentHealth, maxHealth, minHealth);
         checkO2State = CheckPropRange(_currentO2, maxO2, minO2);
         checkLSState = CheckPropRange(_currentLS, maxLS, minLS);
+
+        // clamp of properties
+        _currentHealth = Mathf.Clamp(_currentHealth, minHealth, maxHealth);
+        _currentO2 = Mathf.Clamp(_currentO2, minO2, maxO2);
+        _currentLS = Mathf.Clamp(_currentLS, minLS, maxLS);
+
         if (Input.GetKeyDown(KeyCode.RightShift))
         {
             TakeDamage(20);
@@ -105,7 +111,7 @@ public class PlayerProperty : MonoBehaviour
     public void Cure(float _cure)
     {
         _currentHealth += _cure;
-
+        _currentO2 = Mathf.Clamp(_currentO2, 0f, maxO2);
     }
     public void CureUpTo(float _cureTarget)
     {

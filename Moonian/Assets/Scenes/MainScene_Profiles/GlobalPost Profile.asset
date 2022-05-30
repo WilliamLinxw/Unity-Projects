@@ -1,5 +1,33 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9109760972924873888
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65e486e4de6e5448a8fbb43dc8756a0, type: 3}
+  m_Name: Grain
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  colored:
+    overrideState: 1
+    value: 1
+  intensity:
+    overrideState: 1
+    value: 0.127
+  size:
+    overrideState: 1
+    value: 0.52
+  lumContrib:
+    overrideState: 1
+    value: 0.8
 --- !u!114 &-8631923497127746615
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -65,19 +93,19 @@ MonoBehaviour:
     value: 0
   saturation:
     overrideState: 1
-    value: -50
+    value: -60
   brightness:
     overrideState: 0
     value: 0
   postExposure:
     overrideState: 1
-    value: 0.8
+    value: 0.1
   contrast:
     overrideState: 1
-    value: 2.8
+    value: 5
   mixerRedOutRedIn:
-    overrideState: 0
-    value: 100
+    overrideState: 1
+    value: 109
   mixerRedOutGreenIn:
     overrideState: 1
     value: -7
@@ -88,29 +116,29 @@ MonoBehaviour:
     overrideState: 1
     value: -11
   mixerGreenOutGreenIn:
-    overrideState: 0
-    value: 100
+    overrideState: 1
+    value: 104
   mixerGreenOutBlueIn:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 4
   mixerBlueOutRedIn:
     overrideState: 1
-    value: 7
+    value: -14
   mixerBlueOutGreenIn:
     overrideState: 1
     value: 7
   mixerBlueOutBlueIn:
-    overrideState: 0
-    value: 100
+    overrideState: 1
+    value: 118
   lift:
     overrideState: 1
     value: {x: 0.8072369, y: 0.9021669, z: 1, w: -0.040187545}
   gamma:
     overrideState: 1
-    value: {x: 0.90026516, y: 0.95584214, z: 1, w: 0}
+    value: {x: 0.8349438, y: 0.89817894, z: 1, w: 0.068634175}
   gain:
     overrideState: 1
-    value: {x: 0.95542794, y: 1, z: 0.7780776, w: 0}
+    value: {x: 0.95542794, y: 1, z: 0.7780776, w: 0.24708308}
   masterCurve:
     overrideState: 0
     value:
@@ -1329,6 +1357,7 @@ MonoBehaviour:
   - {fileID: 6635937330628665519}
   - {fileID: 9183161356621278204}
   - {fileID: 5785963987511983038}
+  - {fileID: -9109760972924873888}
 --- !u!114 &4016704841841286142
 MonoBehaviour:
   m_ObjectHideFlags: 3

@@ -72,7 +72,7 @@ public class portal2incam2 : MonoBehaviour
         if(isVisible(cam, target))
         {
             target.GetComponent<MeshRenderer>().enabled = false;
-            Debug.Log("detected");
+            //Debug.Log("detected");
         }
         else
         {
