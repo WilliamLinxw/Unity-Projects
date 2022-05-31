@@ -48,10 +48,11 @@ public class ThirdPersonCameraControl : MonoBehaviour
     void ViewObstructed()
     {
         RaycastHit hit;
-
+        Vector3 direction = Target.position - transform.position;
+        Debug.Log("direction:" + direction);
         if (Physics.Raycast(transform.position, Target.position - transform.position, out hit, 4.5f))
         {
-
+            Debug.DrawRay(transform.position, direction * hit.distance, Color.yellow);  
             if (hit.collider.gameObject.tag != "Player")
             {
                 Debug.Log("not player");
