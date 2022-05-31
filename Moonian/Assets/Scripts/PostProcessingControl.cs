@@ -32,5 +32,14 @@ public class PostProcessingControl : MonoBehaviour
         }
         dweight = Mathf.Clamp(dweight, 0, 1);
         dyingVolume.weight = dweight;
+        if (health <= healthThreshold / 2)
+        {
+            if (FindObjectOfType<AudioManager>().sounds[2].source.isPlaying) return;  // check if it's already playing
+            FindObjectOfType<AudioManager>().Play("Heartbeat");
+        }
+        else
+        {
+            FindObjectOfType<AudioManager>().Stop("Heartbeat");
+        }
     }
 }

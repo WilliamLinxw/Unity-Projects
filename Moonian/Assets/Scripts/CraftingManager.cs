@@ -11,7 +11,7 @@ public class CraftingManager : MonoBehaviour
 
     public delegate void OnItemChanged();
     public OnItemChanged onItemChangedCallback;
-    public CraftingUI craftingUI;
+    // public CraftingUI craftingUI;
 
     public List<Item> SortedCrafting;
     private List<Recipe> Recipes;
@@ -23,7 +23,7 @@ public class CraftingManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        craftingUI.Init();
+        // craftingUI.Init();
         Recipes = GetComponent<CraftingRecipes>().Recipes;
     }
 

@@ -16,11 +16,16 @@ public class CraftingUI : MonoBehaviour
     public Transform inventoryItemsParent;
     public Transform craftingItemsParent;
 
-    private void Awake() {
-        Instance = this;
-    }
-    void Start()
+    private void Awake() 
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         Init();
     }
     void Update()

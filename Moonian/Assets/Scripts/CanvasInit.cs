@@ -18,6 +18,7 @@ public class CanvasInit : MonoBehaviour
         wBar.SetActive(false);
 
         inventoryUI.SetActive(false);
+        craftingUI.SetActive(true);
         craftingUI.SetActive(false);
     }
 

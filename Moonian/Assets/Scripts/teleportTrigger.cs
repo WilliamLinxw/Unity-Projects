@@ -23,7 +23,7 @@ public class teleportTrigger : MonoBehaviour
         {
 
             StartCoroutine("Teleport12");
-
+            FindObjectOfType<AudioManager>().Play("Blop_1");
             
         }
             
@@ -31,7 +31,7 @@ public class teleportTrigger : MonoBehaviour
         {
 
             StartCoroutine("Teleport21");
-
+            FindObjectOfType<AudioManager>().Play("Blop_1");
             
         }
 
