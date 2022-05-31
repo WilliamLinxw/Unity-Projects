@@ -24,8 +24,9 @@ public class PlayerProperty : MonoBehaviour
     public bool isInBase, isInVehicle = false;
     public bool isOverweight = false;
     public bool isInShelters {get {return _isInShelters;}}
-    public float o2RecoveryRate, lsRecoveryRate;
     bool _isInShelters;
+    public bool playerLightOn;
+    public float o2RecoveryRate, lsRecoveryRate;
     public HealthBar healthBar;
     public O2Bar o2Bar;
     public LSBar lsBar;
@@ -35,6 +36,7 @@ public class PlayerProperty : MonoBehaviour
     private int checkHealthState, checkO2State, checkLSState;
     private float _runningConsumingRate = 1;
     private float _overweightConsumingRate = 1;
+    private float _playerLightConsumingRate = 1;
     
 
     void Awake()
@@ -48,6 +50,7 @@ public class PlayerProperty : MonoBehaviour
 
     void Update()
     {
+        // check if overweight
         if (isOverweight)
         {
             _overweightConsumingRate = 1.5f;
@@ -56,6 +59,7 @@ public class PlayerProperty : MonoBehaviour
         {
             _overweightConsumingRate = 1f;
         }
+        // check if in shelters
         _isInShelters = (isInBase) || (isInVehicle);
         if (Player.Instance.isRunning)
         {
@@ -65,6 +69,16 @@ public class PlayerProperty : MonoBehaviour
         {
             _runningConsumingRate = 1;
         }
+        // check if light is on
+        if (playerLightOn)
+        {
+            _playerLightConsumingRate = 1.5f;
+        }
+        else
+        {
+            _playerLightConsumingRate = 1f;
+        }
+
         checkHealthState = CheckPropRange(_currentHealth, maxHealth, minHealth);
         checkO2State = CheckPropRange(_currentO2, maxO2, minO2);
         checkLSState = CheckPropRange(_currentLS, maxLS, minLS);
@@ -76,7 +90,7 @@ public class PlayerProperty : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.RightShift))
         {
-            TakeDamage(20);
+            TakeDamage(20);  // for test
         }
         if (checkHealthState == 1)
         {
@@ -149,7 +163,7 @@ public class PlayerProperty : MonoBehaviour
     {
         if (!_isInShelters)
         {
-            _currentLS -= lsConsumeRate;
+            _currentLS -= lsConsumeRate * _playerLightConsumingRate;
         }
         else
         {

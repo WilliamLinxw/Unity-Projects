@@ -7,7 +7,8 @@ public class CraftingManager : MonoBehaviour
     public static CraftingManager Instance;
     public List<Item> Crafting = new List<Item>();
     public List<Item> Crafted = new List<Item>();
-    public int maxCraftingRoom, maxCraftedRoom = 4;
+    public int maxCraftingRoom = 4;
+    public int maxCraftedRoom = 4;
 
     public delegate void OnItemChanged();
     public OnItemChanged onItemChangedCallback;
@@ -38,11 +39,12 @@ public class CraftingManager : MonoBehaviour
     {
         Item item_ = Instantiate(item);
         int item_ind = CheckContainsItem(item_.itemName, Crafting);
-        if (Crafting.Count >= maxCraftingRoom && item_ind != -1)
+        if (Crafting.Count >= maxCraftingRoom && item_ind == -1)
         {
             Debug.Log("No enough crafting room!");
             item_.itemAmount = 1;
             InventoryManager.Instance.Add(item_);
+            return;
         }
         if (item_ind == -1)
         {
@@ -226,7 +228,7 @@ public class CraftingManager : MonoBehaviour
     {
         foreach (Item i in l)
         {
-            if (i.itemAmount <= 0)
+            if (i == null || i.itemAmount <= 0)
             {
                 l.Remove(i);
             }

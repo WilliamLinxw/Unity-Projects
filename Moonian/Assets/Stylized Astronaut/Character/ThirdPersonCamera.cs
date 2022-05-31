@@ -20,6 +20,7 @@ public class ThirdPersonCamera : MonoBehaviour
     private float sensitivityX = 20.0f;
     private float sensitivityY = 20.0f;
     private bool changed = false;
+    public List<GameObject> obstructionList = new List<GameObject>();
 
     private void Start()
     {
@@ -36,17 +37,20 @@ public class ThirdPersonCamera : MonoBehaviour
 
     void camControl()
     {
-        currentX += Input.GetAxis("Mouse X");
-        currentY -= Input.GetAxis("Mouse Y");
+        if (!FindObjectOfType<GlobalControl>().gamePaused)
+        {
+            currentX += Input.GetAxis("Mouse X");
+            currentY -= Input.GetAxis("Mouse Y");
 
-        currentY = Mathf.Clamp(currentY, Y_ANGLE_MIN, Y_ANGLE_MAX);
+            currentY = Mathf.Clamp(currentY, Y_ANGLE_MIN, Y_ANGLE_MAX);
 
-        transform.LookAt(Target);
+            transform.LookAt(Target);
 
-        Vector3 dir = new Vector3(0, 0, -distance);
-        Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
-        camTransform.position = lookAt.position + rotation * dir;
-        camTransform.LookAt(lookAt.position);
+            Vector3 dir = new Vector3(0, 0, -distance);
+            Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
+            camTransform.position = lookAt.position + rotation * dir;
+            camTransform.LookAt(lookAt.position);
+        }
     }
 
     void ViewObstructed()
@@ -80,11 +84,30 @@ public class ThirdPersonCamera : MonoBehaviour
                 if (hit.collider.gameObject.tag != "Player")
                 {
                     //Debug.Log("not player");
-                    Obstruction = hit.transform;
-                    if (Obstruction.gameObject.GetComponent<MeshRenderer>() != null)
+                    //Debug.Log(hit.collider.gameObject.tag);
+                    var isContain = obstructionList.Contains(hit.collider.gameObject);
+                    if (!isContain)
                     {
-                        Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                        obstructionList.Add(hit.collider.gameObject);
                     }
+                    
+                    Debug.Log(obstructionList.ToArray().Length);
+
+
+                    foreach(GameObject obstruction in obstructionList)
+                    {
+                        if (obstruction.GetComponent<MeshRenderer>() != null)
+                        {
+                            obstruction.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                        }
+                            
+                    }
+                    
+                    //Obstruction = hit.transform;
+                    //if (Obstruction.gameObject.GetComponent<MeshRenderer>() != null)
+                    //{
+                    //   Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                    //}
                     
                     //Debug.Log("distance obstruction to transform:" + Vector3.Distance(Obstruction.position, transform.position));
                     //Debug.Log("distance target to transform:" + Vector3.Distance(transform.position, Target.position));
@@ -96,12 +119,25 @@ public class ThirdPersonCamera : MonoBehaviour
                 }
                 else
                 {
-                    //Debug.Log("player");
-                    if (Obstruction.gameObject.GetComponent<MeshRenderer>() != null)
+                    Debug.Log(obstructionList.ToArray().Length);
+                    foreach (GameObject obstruction in obstructionList)
                     {
-                        Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                        if (obstruction.GetComponent<MeshRenderer>() != null)
+                        {
+                            obstruction.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                        }
+
                     }
-                    
+                    obstructionList.Clear();
+
+                    //Debug.Log("player");
+                    //if (Obstruction.gameObject.GetComponent<MeshRenderer>() != null)
+                    //{
+                    //    
+                    //
+                    //    Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                    //}
+
                     //if (Vector3.Distance(transform.position, Target.position) < 4.5f)
                     //{
                     //    transform.Translate(Vector3.back * zoomSpeed * Time.deltaTime);

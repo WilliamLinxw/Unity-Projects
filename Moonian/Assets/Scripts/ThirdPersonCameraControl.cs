@@ -11,6 +11,8 @@ public class ThirdPersonCameraControl : MonoBehaviour
     public Transform Obstruction;
     float zoomSpeed = 2f;
 
+    private List<string> obstructionList = new List<string>();
+
     void Start()
     {
         Obstruction = Target;
@@ -53,6 +55,9 @@ public class ThirdPersonCameraControl : MonoBehaviour
         {
             if (hit.collider.gameObject.tag != "Player")
             {
+                Debug.Log(hit.collider.gameObject.tag);
+                obstructionList.Add(hit.collider.gameObject.tag);
+                Debug.Log(obstructionList);
                 Debug.Log("not player");
                 Obstruction = hit.transform;
                 Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;

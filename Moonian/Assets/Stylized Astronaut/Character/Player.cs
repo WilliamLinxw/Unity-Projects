@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     private int fovMax = 120;
     private float overweightVelRatio = 0.6f;
 
+
     public bool atWorktable {get {return _atWorktable;}}
     private bool _atWorktable = false;
 
@@ -68,18 +69,28 @@ public class Player : MonoBehaviour
             return;
         }
         
+        // pickup by press E
         if (Input.GetKeyDown(KeyCode.E))
         {
             pressE = 0;
         }
         pressE += 1;
 
+        // mouse scroll as input
         if (Input.mouseScrollDelta.y != 0)
         {
+            // fov change as scrolling
             float fov = cam.fieldOfView;
             float deltaFov = Input.mouseScrollDelta.y * camScale;
             fov += deltaFov;
             cam.fieldOfView = Mathf.Clamp(fov, fovMin, fovMax);
+        }
+
+        // light check
+        if (Input.GetButtonDown("Player Light Switch"))
+        {
+            PlayerProperty.Instance.playerLightOn = !PlayerProperty.Instance.playerLightOn;
+            this.gameObject.transform.Find("PlayerLight").gameObject.SetActive(!this.gameObject.transform.Find("PlayerLight").gameObject.activeSelf);
         }
     }
 

@@ -56,6 +56,14 @@ public class CraftingSlot : MonoBehaviour
         item_.itemAmount = 1;
         item.itemAmount -= 1;
         InventoryManager.Instance.Add(item_);
+        foreach (Item it in CraftingManager.Instance.Crafting)
+        {
+            if (it.id == item.id)
+            {
+                it.itemAmount -= 1;
+                break;
+            }
+        }
         if (item.itemAmount == 0)
         {
             CraftingManager.Instance.RemoveCraftingItem(item);
@@ -65,14 +73,6 @@ public class CraftingSlot : MonoBehaviour
         else
         {
             UpdateAmount();
-        }
-        foreach (Item it in CraftingManager.Instance.Crafting)
-        {
-            if (it.id == item.id)
-            {
-                it.itemAmount -= 1;
-                break;
-            }
         }
         CraftingManager.Instance.CheckRecipes();
     }
