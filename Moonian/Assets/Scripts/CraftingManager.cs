@@ -125,7 +125,6 @@ public class CraftingManager : MonoBehaviour
     {
         if (rcp != null)
         {
-            //todo check worktable; ignored by now!
             if (rcp.requireTable && !Player.Instance.atWorktable)
             {
                 return;  // at worktable not satisfied -> directly return
@@ -191,6 +190,7 @@ public class CraftingManager : MonoBehaviour
 
     public void DropItems()
     {
+        // clear the crafting items
         Crafting = new List<Item>();
         SortedCrafting = new List<Item>();
         Crafted = new List<Item>();

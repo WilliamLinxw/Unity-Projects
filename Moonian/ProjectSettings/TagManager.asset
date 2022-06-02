@@ -16,6 +16,12 @@ TagManager:
   - Target
   - Terrain
   - Worktable
+  - Enemy
+  - BoundaryOfWorld
+  - portal 3
+  - portal 4
+  - portal 5
+  - portal 6
   layers:
   - Default
   - TransparentFX

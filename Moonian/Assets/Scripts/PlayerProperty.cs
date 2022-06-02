@@ -118,7 +118,7 @@ public class PlayerProperty : MonoBehaviour
         wBar.SetValue(InventoryManager.Instance.totalWeight);
     }
 
-    void TakeDamage(float _dmg)
+    public void TakeDamage(float _dmg)
     {
         _currentHealth -= _dmg;
     }
@@ -209,6 +209,14 @@ public class PlayerProperty : MonoBehaviour
     }
     void Death()
     {
+        // todo some animation after player death
+        GlobalControl.Instance.Death();  // call the global control about death
+    }
 
+    public void SetProp(float h, float o, float l)
+    {
+        _currentHealth = h;
+        _currentO2 = o;
+        _currentLS = l;
     }
 }

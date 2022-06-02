@@ -96,4 +96,14 @@ public class InventoryManager : MonoBehaviour
         _totalWeight -= item.weight;
     }
 
+    public void CalcWeight()
+    {
+        float w = 0;
+        foreach (Item i in Items)
+        {
+            w += i.itemAmount * i.weight;
+        }
+        _totalWeight = w;
+    }
+
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 212
   itemName: Life Support Module
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: bfd4a80c361ea234bb13fc154f694153, type: 3}
   isInteratable: 1
   isCollectable: 1
   isSpawnable: 0

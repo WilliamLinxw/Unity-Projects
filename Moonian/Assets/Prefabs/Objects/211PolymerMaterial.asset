@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 211
   itemName: Polymer Material
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 52ad274d238428a46be6360882127ffa, type: 3}
   isInteratable: 1
   isCollectable: 1
   isSpawnable: 0

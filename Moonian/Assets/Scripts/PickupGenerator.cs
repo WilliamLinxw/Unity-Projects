@@ -78,9 +78,9 @@ public class GenObj
 {
     public GameObject Prefab;
 
-    [Range(100, 2400)]
+    [Range(100, 4900)]
     public int xMin, xMax;
-    [Range(100, 2400)]
+    [Range(100, 4900)]
     public int zMin, zMax;  // range that objects can be generated (Absolute values!)
     [Range(0, 999)]
     public uint minNum, maxNum;
