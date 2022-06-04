@@ -19,10 +19,14 @@ public class InventoryManager : MonoBehaviour
     public OnItemChanged onItemChangedCallback;
     public InventoryUI inventoryUI;
 
+    public SaveLoadSystem sls;  // for referring on the pickup items
+    public int[] picked;
+
     private void Awake()
     {
         Instance = this;
         inventoryUI.Init();
+        picked = new int[sls.iList.Count];
     }
     public void Add(Item item)
     {
@@ -61,6 +65,15 @@ public class InventoryManager : MonoBehaviour
         }    
         
         _totalWeight += item.weight;
+        // add the picked item to the array so that new resources generated would be reduced
+        for (int i = 0; i < sls.iList.Count; i++)
+        {
+            if (sls.iList[i].id == item.id)
+            {
+                picked[i] += 1;
+                break;
+            }
+        }
         // Debug.Log(totalWeight);
         if (onItemChangedCallback != null)
         {
@@ -89,11 +102,17 @@ public class InventoryManager : MonoBehaviour
 
             CraftingManager.Instance.AddCraftingItem(item);
         }
+        if (item.id == 2 && Player.Instance.atRefueling)
+        {
+            Items[Items.IndexOf(item)].itemAmount -= 1; // fuel
+            FindObjectOfType<EscapeRocket>().Refuel();
+            
+        }
         if (Items[Items.IndexOf(item)].itemAmount < 1)
         {
             Remove(item);
         }
-        _totalWeight -= item.weight;
+        CalcWeight();
     }
 
     public void CalcWeight()

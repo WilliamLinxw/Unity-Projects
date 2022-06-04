@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GlobalControl : MonoBehaviour
 {
@@ -8,13 +9,30 @@ public class GlobalControl : MonoBehaviour
     public static GlobalControl Instance;
     public bool gamePaused {get { return _gamePaused;}}
     private bool _gamePaused = false;
+    public bool videoPlayed = false;
+
+    public SaveLoadSystem sls;  // enable to start from load
+    public GameObject tutorialBox1;
+    public GameObject escapeRocket;
+    public GameObject deathMenu;
+    public GameObject[] ObjForStartVideo;
+    
 
     public List<GameObject> HiddenObjects;  // a series of objects that need to be hidden when calling the pause menu
     private bool propBarsState;
 
     void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }    
     }
 
     private void Update() 
@@ -48,6 +66,40 @@ public class GlobalControl : MonoBehaviour
         _gamePaused = false;
     }
 
+    public void StartGame()
+    {
+        Player.Instance.disabled = true;
+        Cursor.visible = false;
+        PlayStartVideo();
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+        FindObjectOfType<PickupGenerator>().SpawnPickups(true);
+        tutorialBox1.SetActive(true);
+        Player.Instance.disabled = false;
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log("New scene is loaded!");
+        escapeRocket.GetComponent<EscapeRocket>().LoadSetFuel(0);
+        _gamePaused = false;
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+        Player.Instance.disabled = false;
+    }
+
+    public void StartLoad()
+    {
+        videoPlayed = true;
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+        sls.LoadPlayer();
+        FindObjectOfType<PickupGenerator>().SpawnPickups(false);
+        tutorialBox1.SetActive(false);
+        Player.Instance.disabled = false;
+    }
+
     private void SwitchListActiveState()
     {
         foreach (GameObject obj in HiddenObjects)
@@ -68,6 +120,16 @@ public class GlobalControl : MonoBehaviour
 
     public void Death()
     {
-        
+        Time.timeScale = 0.1f;
+        Player.Instance.disabled = true;
+        deathMenu.SetActive(true);
+    }
+
+    private void PlayStartVideo()
+    {
+        foreach (GameObject obj in ObjForStartVideo)
+        {
+            obj.SetActive(true);
+        }
     }
 }

@@ -6,13 +6,13 @@ public static class SaveNLoad
 {
     // Ref: https://www.youtube.com/watch?v=XOjd_qU2Ido
     
-    public static void SavePlayer(Player player, PlayerProperty pp, int[] it)
+    public static void SavePlayer(Player player, PlayerProperty pp, int[] it, int rf, int[] pked)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/player.moon";
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        PlayerData data = new PlayerData(player, pp, it);
+        PlayerData data = new PlayerData(player, pp, it, rf, pked);
 
         formatter.Serialize(stream, data);
         stream.Close();

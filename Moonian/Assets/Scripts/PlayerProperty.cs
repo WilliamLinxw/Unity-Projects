@@ -209,7 +209,6 @@ public class PlayerProperty : MonoBehaviour
     }
     void Death()
     {
-        // todo some animation after player death
         GlobalControl.Instance.Death();  // call the global control about death
     }
 

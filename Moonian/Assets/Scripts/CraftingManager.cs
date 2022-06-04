@@ -226,11 +226,15 @@ public class CraftingManager : MonoBehaviour
 
     private List<Item> Remove0Items(List<Item> l)
     {
-        foreach (Item i in l)
+        if (l != null && l.Count > 0)
         {
-            if (i == null || i.itemAmount <= 0)
+            List<Item> l_ = new List<Item>(l);
+            foreach (Item i in l_)
             {
-                l.Remove(i);
+                if (i == null || i.itemAmount <= 0)
+                {
+                    l.Remove(i);
+                }
             }
         }
         return l;

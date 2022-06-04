@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 213
   itemName: Battery
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 842299e4aba135048874bc5b8b6e5559, type: 3}
   isInteratable: 1
   isCollectable: 1
   isSpawnable: 0

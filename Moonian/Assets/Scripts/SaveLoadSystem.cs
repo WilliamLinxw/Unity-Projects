@@ -5,6 +5,7 @@ using UnityEngine;
 public class SaveLoadSystem : MonoBehaviour
 {
     public List<Item> iList;
+    public EscapeRocket escapeRocket;
 
     public void SavePlayer()
     {
@@ -21,7 +22,9 @@ public class SaveLoadSystem : MonoBehaviour
                 }
             }
         }
-        SaveNLoad.SavePlayer(Player.Instance, PlayerProperty.Instance, it);
+        int rf = escapeRocket.fuel;
+        int[] picked = InventoryManager.Instance.picked;
+        SaveNLoad.SavePlayer(Player.Instance, PlayerProperty.Instance, it, rf, picked);
     }
 
     public void LoadPlayer()
@@ -49,6 +52,9 @@ public class SaveLoadSystem : MonoBehaviour
         }
         InventoryManager.Instance.inventoryUI.UpdateUI();
         InventoryManager.Instance.CalcWeight();
+
+        escapeRocket.LoadSetFuel(data.refuel);
+        InventoryManager.Instance.picked = data.picked;
     }
 
     private bool CheckNull(Player p, PlayerProperty pp, InventoryManager im)

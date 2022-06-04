@@ -75,18 +75,18 @@ public class teleportTrigger : MonoBehaviour
     IEnumerator Teleport12()
     {
         float side = portal1.transform.position.z - player.transform.position.z;
-        Debug.Log(side);
-        Debug.Log(Mathf.Sign(side));
+        //Debug.Log(side);
+        //Debug.Log(Mathf.Sign(side));
         player.disabled = true;
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.001f);
 
         Vector3 position = this.transform.position;
         position.x = portal2.position.x;
-        position.y = portal2.position.y - 3f;
+        position.y = portal2.position.y - 3.3f;
         position.z = portal2.position.z + Mathf.Sign(side) * 1f;
         gameObject.transform.position = position;
 
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.001f);
         Debug.Log("teleport12");
         player.disabled = false;
     }
@@ -94,19 +94,19 @@ public class teleportTrigger : MonoBehaviour
     IEnumerator Teleport21()
     {
         float side = portal2.transform.position.z - player.transform.position.z;
-        Debug.Log(side);
-        Debug.Log(Mathf.Sign(side));
+        //Debug.Log(side);
+        //Debug.Log(Mathf.Sign(side));
 
         player.disabled = true;
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.001f);
 
         Vector3 position = this.transform.position;
         position.x = portal1.position.x;
-        position.y = portal1.position.y - 3f;
+        position.y = portal1.position.y - 3.3f;
         position.z = portal1.position.z + Mathf.Sign(side) * 1f;
         gameObject.transform.position = position;
 
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.001f);
         Debug.Log("teleport21");
         player.disabled = false;
     }
@@ -118,15 +118,15 @@ public class teleportTrigger : MonoBehaviour
         //Debug.Log(side);
         //Debug.Log(Mathf.Sign(side));
         player.disabled = true;
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.001f);
 
         Vector3 position = this.transform.position;
         position.x = portal4.position.x;
-        position.y = portal4.position.y - 3f;
+        position.y = portal4.position.y - 3.2f;
         position.z = portal4.position.z + Mathf.Sign(side) * 1f;
         gameObject.transform.position = position;
 
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.001f);
         Debug.Log("teleport34");
         player.disabled = false;
     }
@@ -137,15 +137,15 @@ public class teleportTrigger : MonoBehaviour
         //Debug.Log(side);
         //Debug.Log(Mathf.Sign(side));
         player.disabled = true;
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.001f);
 
         Vector3 position = this.transform.position;
         position.x = portal3.position.x;
-        position.y = portal3.position.y - 3f;
+        position.y = portal3.position.y - 3.2f;
         position.z = portal3.position.z + Mathf.Sign(side) * 1f;
         gameObject.transform.position = position;
 
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.001f);
         Debug.Log("teleport43");
         player.disabled = false;
     }
@@ -157,15 +157,15 @@ public class teleportTrigger : MonoBehaviour
         //Debug.Log(side);
         //Debug.Log(Mathf.Sign(side));
         player.disabled = true;
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.001f);
 
         Vector3 position = this.transform.position;
         position.x = portal6.position.x;
-        position.y = portal6.position.y - 3f;
+        position.y = portal6.position.y - 3.2f;
         position.z = portal6.position.z + Mathf.Sign(side) * 1f;
         gameObject.transform.position = position;
 
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.001f);
         Debug.Log("teleport56");
         player.disabled = false;
     }
@@ -181,7 +181,7 @@ public class teleportTrigger : MonoBehaviour
 
         Vector3 position = this.transform.position;
         position.x = portal5.position.x;
-        position.y = portal5.position.y - 3f;
+        position.y = portal5.position.y - 3.2f;
         position.z = portal5.position.z + Mathf.Sign(side) * 1f;
         gameObject.transform.position = position;
 

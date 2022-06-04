@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
+    public static InventoryUI Instance;
     public Transform itemsParent;
     InventoryManager inventory;
     InventorySlot[] slots;
+    void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         Init();

@@ -9,25 +9,52 @@ public class PickupGenerator : MonoBehaviour
     public List<BoxItems> ContainerItems;
     public int MaxContainerItemNum = 6;
     private List<BoxItems> SortedItems;
-    void Start()
+
+    public SaveLoadSystem sls;
+    void Awake()
     {
         SortContainerItems();
-        SpawnPickups();
     }
 
-    private void SpawnPickups()
+    public void SpawnPickups(bool newGameIndicator)
     {
         foreach (GenObj g in GenerateObjects)
         {
             int num = (int)Random.Range(g.minNum, g.maxNum);
+
+            // adjust the num of generation
+            if (!newGameIndicator)
+            {
+                int[] pked = InventoryManager.Instance.picked;
+                if (g.Prefab.GetComponent<ItemController>().item.id != 256) // box/chest not affected
+                {
+                    int j;
+                    for (j = 0; j < sls.iList.Count; j++)
+                    {
+                        if (sls.iList[j].id == g.Prefab.GetComponent<ItemController>().item.id)
+                        {
+                            break;
+                        }
+                    }
+                    num -= pked[j];
+                }
+            }
+            Debug.Log("Generating" + g.Prefab.GetComponent<ItemController>().item.name + ":" + num);
+            if (num <= 0) continue; // no more generation of this item
             for (int i = 0; i < num; i++)
             {
+                // generate random items with random positions and rotations
                 float xPos = Random.Range(g.xMin, g.xMax) * Mathf.Sign(Random.value - 0.5f);
                 float zPos = Random.Range(g.zMin, g.zMax) * Mathf.Sign(Random.value - 0.5f);
+                float xRot = Random.Range(-10f, 10f);
+                float yRot = Random.Range(-180f, 180f);
+                float zRot = Random.Range(-10f, 10f);
                 Vector3 pos = new Vector3(xPos, 0, zPos);
+                Quaternion rot = Quaternion.Euler(xRot, yRot, zRot);
                 pos.y = Terrain.activeTerrain.SampleHeight(pos);
                 GameObject obj = Instantiate(g.Prefab);
                 obj.transform.position = pos;
+                obj.transform.rotation = rot;
                 obj.transform.parent = parentTF;
 
                 if (obj.name.Contains("Cardbox") || obj.name.Contains("Chest1"))

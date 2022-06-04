@@ -35,7 +35,6 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        
         Play("Background_1");
     }
 

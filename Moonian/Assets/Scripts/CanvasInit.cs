@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DevionGames.UIWidgets;
 
 public class CanvasInit : MonoBehaviour
 {
@@ -11,25 +12,30 @@ public class CanvasInit : MonoBehaviour
     public GameObject inventoryUI;
     public GameObject craftingUI;
     public GameObject Help3;
+    public GameObject itemsDescriptionPanel;
 
     private bool[] barsState = new bool[4];
+    private bool itemsPanelShowing;
 
     void Start()
     {
         healthBar.SetActive(false);
         o2Bar.SetActive(false);
+        lsBar.SetActive(false);
         wBar.SetActive(false);
 
         inventoryUI.SetActive(false);
         craftingUI.SetActive(true);
         craftingUI.SetActive(false);
+
     }
 
     void Update()
     {
-        if (InventoryManager.Instance.totalWeight == 0 && !Help3.activeSelf)
+        if (!GlobalControl.Instance.videoPlayed) return;
+        if (InventoryManager.Instance.totalWeight <= 10 && !Help3.activeSelf)
         {
-            wBar.SetActive(false);  // hide weight bar if carrying no items
+            wBar.SetActive(false);  // hide weight bar if carrying too less
         }
         else wBar.SetActive(true);
         if (GameObject.Find("Player").GetComponent<PlayerProperty>().currentHealth < GameObject.Find("Player").GetComponent<PlayerProperty>().maxHealth)
@@ -66,6 +72,21 @@ public class CanvasInit : MonoBehaviour
         if (craftingUI.activeSelf)
         {
             inventoryUI.SetActive(false);
+        }
+
+        if (Input.GetButtonDown("ItemInfoPanel"))
+        {
+            if (!itemsPanelShowing) 
+            {
+                if (!itemsDescriptionPanel.activeSelf) itemsDescriptionPanel.SetActive(true);
+                itemsDescriptionPanel.GetComponent<UIWidget>().Show();
+                itemsPanelShowing = true;
+            }
+            else 
+            {
+                itemsDescriptionPanel.GetComponent<UIWidget>().Close();
+                itemsPanelShowing = false;
+            }
         }
     }
 

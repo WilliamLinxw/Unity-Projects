@@ -49,7 +49,7 @@ public class portal1incam1 : MonoBehaviour
         //Debug.Log("lowerright:" + point_lowerright);
 
 
-        if (distance <= 200)
+        if (distance <= 150)
         {
             foreach (var plane in planes)
             {
