@@ -88,10 +88,10 @@ public class PlayerProperty : MonoBehaviour
         _currentO2 = Mathf.Clamp(_currentO2, minO2, maxO2);
         _currentLS = Mathf.Clamp(_currentLS, minLS, maxLS);
 
-        if (Input.GetKeyDown(KeyCode.RightShift))
-        {
-            TakeDamage(20);  // for test
-        }
+        // if (Input.GetKeyDown(KeyCode.RightShift))
+        // {
+        //     TakeDamage(20);  // for test
+        // }
         if (checkHealthState == 1)
         {
             Death();

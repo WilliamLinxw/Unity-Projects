@@ -249,10 +249,10 @@ InputManager:
     m_Name: Inventory
     descriptiveName: Inventory UI Toggle On
     descriptiveNegativeName: Inventory UI Toggle Off
-    negativeButton: b
-    positiveButton: i
-    altNegativeButton: i
-    altPositiveButton: joystick button 1
+    negativeButton: tab
+    positiveButton: tab
+    altNegativeButton: 
+    altPositiveButton: 
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
@@ -265,9 +265,9 @@ InputManager:
     m_Name: Crafting
     descriptiveName: Crafting UI Toggle On
     descriptiveNegativeName: Crafting UI Toggle Off
-    negativeButton: b
+    negativeButton: c
     positiveButton: c
-    altNegativeButton: c
+    altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
     dead: 0.001
@@ -297,8 +297,8 @@ InputManager:
     m_Name: Spot Angle Change
     descriptiveName: Spot Angle Increase
     descriptiveNegativeName: Spot Angle Decrease
-    negativeButton: '['
-    positiveButton: ']'
+    negativeButton: r
+    positiveButton: t
     altNegativeButton: 
     altPositiveButton: 
     gravity: 500
@@ -313,8 +313,8 @@ InputManager:
     m_Name: Player Light Switch
     descriptiveName: Player Light On
     descriptiveNegativeName: Player Light Off
-    negativeButton: l
-    positiveButton: l
+    negativeButton: f
+    positiveButton: f
     altNegativeButton: 
     altPositiveButton: 
     gravity: 500
@@ -521,8 +521,24 @@ InputManager:
     m_Name: ItemInfoPanel
     descriptiveName: Show items panel
     descriptiveNegativeName: Hide items panel
-    negativeButton: p
-    positiveButton: p
+    negativeButton: z
+    positiveButton: z
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: RecipeInfoPanel
+    descriptiveName: Show recipe info panel
+    descriptiveNegativeName: Hide recipe info panel
+    negativeButton: x
+    positiveButton: x
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000

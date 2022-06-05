@@ -132,6 +132,7 @@ public class CraftingManager : MonoBehaviour
             for (int i = 0; i < rcp.Out_items.Count; i++)
             {
                 int flag = 0;
+                // check if the crafted item is already in the list
                 foreach (Item c in Crafted)
                 {
                     if (c.id == rcp.Out_items[i].id)
@@ -143,8 +144,14 @@ public class CraftingManager : MonoBehaviour
                 }
                 if (flag == 0)
                 {
-                    Crafted.Add(Instantiate(rcp.Out_items[i]));
-                    Crafted[i].itemAmount = rcp.Out_amount[i] * currentAmount;
+                    // no same item is in the list
+                    // first check if the crafted list has free room
+                    if (Crafted.Count <= maxCraftedRoom)
+                    {
+                        Crafted.Add(Instantiate(rcp.Out_items[i]));
+                        Crafted[Crafted.Count - 1].itemAmount = rcp.Out_amount[i] * currentAmount;
+                    }
+                    // then no free room -> not to add
                 }
             }
             AddCraftedItems();

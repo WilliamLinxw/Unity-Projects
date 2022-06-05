@@ -6,6 +6,7 @@ public class SaveLoadSystem : MonoBehaviour
 {
     public List<Item> iList;
     public EscapeRocket escapeRocket;
+    public GameObject deathMenu;
 
     public void SavePlayer()
     {
@@ -55,6 +56,13 @@ public class SaveLoadSystem : MonoBehaviour
 
         escapeRocket.LoadSetFuel(data.refuel);
         InventoryManager.Instance.picked = data.picked;
+
+        Time.timeScale = 1f;
+
+        if (deathMenu.activeSelf)
+        {
+            deathMenu.SetActive(false);
+        }
     }
 
     private bool CheckNull(Player p, PlayerProperty pp, InventoryManager im)

@@ -13,9 +13,11 @@ public class CanvasInit : MonoBehaviour
     public GameObject craftingUI;
     public GameObject Help3;
     public GameObject itemsDescriptionPanel;
+    public GameObject recipeDescriptionPanel;
 
     private bool[] barsState = new bool[4];
     private bool itemsPanelShowing;
+    private bool recipesPanelShowing;
 
     void Start()
     {
@@ -88,6 +90,20 @@ public class CanvasInit : MonoBehaviour
                 itemsPanelShowing = false;
             }
         }
+        if (Input.GetButtonDown("RecipeInfoPanel"))
+        {
+            if (!recipesPanelShowing) 
+            {
+                if (!recipeDescriptionPanel.activeSelf) recipeDescriptionPanel.SetActive(true);
+                recipeDescriptionPanel.GetComponent<UIWidget>().Show();
+                recipesPanelShowing = true;
+            }
+            else 
+            {
+                recipeDescriptionPanel.GetComponent<UIWidget>().Close();
+                recipesPanelShowing = false;
+            }
+        }
     }
 
     public void BarsOn()
@@ -110,5 +126,14 @@ public class CanvasInit : MonoBehaviour
         o2Bar.SetActive(barsState[1]);
         lsBar.SetActive(barsState[2]);
         wBar.SetActive(barsState[3]);
+    }
+
+    public void SetItemPanelNotShowing()
+    {
+        itemsPanelShowing = false;
+    }
+    public void SetRecipePanelNotShowing()
+    {
+        recipesPanelShowing = false;
     }
 }

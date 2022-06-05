@@ -10,7 +10,7 @@ public class EscapeRocket : MonoBehaviour
     public RefuelBar rBar;
     public Button launch;
     private int _fuel;
-    private int maxFuel = 50;
+    private int maxFuel = 30;
 
     void Start()
     {

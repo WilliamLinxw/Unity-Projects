@@ -10,6 +10,7 @@ public class StreamVideo : MonoBehaviour
     public VideoPlayer videoPlayer;
     public AudioSource audioSource;
     public GameObject blackpaper;
+    public bool backToStartScene;
     private float flag = 0;
     void Start()
     {
@@ -42,11 +43,15 @@ public class StreamVideo : MonoBehaviour
         {
             GlobalControl.Instance.videoPlayed = true;
             Cursor.visible = true;
-            Destroy(rawImage);
-            Destroy(videoPlayer);
-            Destroy(audioSource);
-            Destroy(blackpaper);
-            Destroy(this);
+            rawImage.gameObject.SetActive(false);
+            videoPlayer.gameObject.SetActive(false);
+            audioSource.gameObject.SetActive(false);
+            blackpaper.SetActive(false);
+            this.enabled = false;
+            if (backToStartScene)
+            {
+                GlobalControl.Instance.BackToStartScene();
+            }
         }
     }
 

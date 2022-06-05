@@ -16,6 +16,7 @@ public class GlobalControl : MonoBehaviour
     public GameObject escapeRocket;
     public GameObject deathMenu;
     public GameObject[] ObjForStartVideo;
+    public GameObject[] ObjForWinVideo;
     
 
     public List<GameObject> HiddenObjects;  // a series of objects that need to be hidden when calling the pause menu
@@ -32,7 +33,8 @@ public class GlobalControl : MonoBehaviour
         {
             Destroy(gameObject);
             return;
-        }    
+        }
+        SceneManager.LoadScene("StartScene", LoadSceneMode.Additive);
     }
 
     private void Update() 
@@ -115,7 +117,8 @@ public class GlobalControl : MonoBehaviour
 
     public void Win()
     {
-
+        Cursor.visible = false;
+        PlayWinVideo();
     }
 
     public void Death()
@@ -131,5 +134,20 @@ public class GlobalControl : MonoBehaviour
         {
             obj.SetActive(true);
         }
+        ObjForStartVideo[1].GetComponent<StreamVideo>().enabled = true;
+    }
+
+    private void PlayWinVideo()
+    {
+        foreach (GameObject obj in ObjForWinVideo)
+        {
+            obj.SetActive(true);
+        }
+        ObjForWinVideo[1].GetComponent<StreamVideo>().enabled = true;
+    }
+
+    public void BackToStartScene()
+    {
+        SceneManager.LoadScene("StartScene", LoadSceneMode.Additive);
     }
 }
