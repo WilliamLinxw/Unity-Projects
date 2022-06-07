@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     private bool jumpflag = false;
 
     private int pressE = 1000;
-    private bool isJumping;
+    public bool isJumping {get; private set;}
     private bool isGrounded;
     private bool isBackwards;
     private float camScale = -2f;
@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
 
     public bool atRefueling {get {return _atRefueling;}}
     private bool _atRefueling;
+
+    private Vector3 storedVel = Vector3.zero; // for storage and load
 
     void Awake()
     {
@@ -111,8 +113,14 @@ public class Player : MonoBehaviour
 
     void MotionUpdate(float deltaTime)
     {
+        if (storedVel != Vector3.zero && !controller.isGrounded)
+        {
+            storedVel.y += Physics.gravity.y * deltaTime;
+            controller.Move(storedVel * deltaTime);
+        }
         if (controller.isGrounded)
         {
+            storedVel = Vector3.zero;
             jumpflag = false;
             if (airtime > maxAirTimeWithoutDamage)
             {
@@ -186,15 +194,15 @@ public class Player : MonoBehaviour
         isBackwards = Input.GetKey("s");
         if (isRunning)
         {
-            speed = 3f;
+            speed = speedDefault * 1.5f;
         }
         else if (isBackwards)
         {
-            speed = 1.5f;
+            speed = speedDefault * 0.75f;
         }
         else
         {
-            speed = 2f;
+            speed = speedDefault;
         }
 
         movementDirection = transform.forward * Input.GetAxis("Vertical") * speed;
@@ -214,7 +222,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay(Collider other) 
     {
-        if (other.gameObject.CompareTag("Pickups") && other.gameObject.GetComponent<ItemController>().item.isCollectable && pressE <= 500)
+        if (other.gameObject.CompareTag("Pickups") && other.gameObject.GetComponent<ItemController>().item.isCollectable && pressE <= 200)
         {
             bool interacted = other.gameObject.GetComponent<ItemController>().Interact();
             if (interacted)
@@ -282,5 +290,18 @@ public class Player : MonoBehaviour
     {
         controller.transform.position = pos;
         Physics.SyncTransforms();
+    }
+
+    public void SetStoredVel()
+    {
+        controller.SimpleMove(storedVel);
+    }
+
+    public void GetVel()
+    {
+        storedVel = controller.velocity;
+        float len = Mathf.Sqrt(storedVel.x * storedVel.x + storedVel.z * storedVel.z);
+        storedVel.x = storedVel.x / len * speed;
+        storedVel.z = storedVel.z / len * speed;  // normalize to make sure the moving speed does not exceed the limit
     }
 }

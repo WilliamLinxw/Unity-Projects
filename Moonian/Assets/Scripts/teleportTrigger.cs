@@ -83,7 +83,7 @@ public class teleportTrigger : MonoBehaviour
         Vector3 position = this.transform.position;
         position.x = portal2.position.x;
         position.y = portal2.position.y - 3.3f;
-        position.z = portal2.position.z + Mathf.Sign(side) * 1f;
+        position.z = portal2.position.z + Mathf.Sign(side) * 1.5f;
         gameObject.transform.position = position;
 
         yield return new WaitForSeconds(0.001f);
@@ -103,7 +103,7 @@ public class teleportTrigger : MonoBehaviour
         Vector3 position = this.transform.position;
         position.x = portal1.position.x;
         position.y = portal1.position.y - 3.3f;
-        position.z = portal1.position.z + Mathf.Sign(side) * 1f;
+        position.z = portal1.position.z + Mathf.Sign(side) * 1.5f;
         gameObject.transform.position = position;
 
         yield return new WaitForSeconds(0.001f);
@@ -123,7 +123,7 @@ public class teleportTrigger : MonoBehaviour
         Vector3 position = this.transform.position;
         position.x = portal4.position.x;
         position.y = portal4.position.y - 3.2f;
-        position.z = portal4.position.z + Mathf.Sign(side) * 1f;
+        position.z = portal4.position.z + Mathf.Sign(side) * 1.5f;
         gameObject.transform.position = position;
 
         yield return new WaitForSeconds(0.001f);
@@ -142,7 +142,7 @@ public class teleportTrigger : MonoBehaviour
         Vector3 position = this.transform.position;
         position.x = portal3.position.x;
         position.y = portal3.position.y - 3.2f;
-        position.z = portal3.position.z + Mathf.Sign(side) * 1f;
+        position.z = portal3.position.z + Mathf.Sign(side) * 1.5f;
         gameObject.transform.position = position;
 
         yield return new WaitForSeconds(0.001f);
@@ -162,7 +162,7 @@ public class teleportTrigger : MonoBehaviour
         Vector3 position = this.transform.position;
         position.x = portal6.position.x;
         position.y = portal6.position.y - 3.2f;
-        position.z = portal6.position.z + Mathf.Sign(side) * 1f;
+        position.z = portal6.position.z + Mathf.Sign(side) * 1.5f;
         gameObject.transform.position = position;
 
         yield return new WaitForSeconds(0.001f);
@@ -182,7 +182,7 @@ public class teleportTrigger : MonoBehaviour
         Vector3 position = this.transform.position;
         position.x = portal5.position.x;
         position.y = portal5.position.y - 3.2f;
-        position.z = portal5.position.z + Mathf.Sign(side) * 1f;
+        position.z = portal5.position.z + Mathf.Sign(side) * 1.5f;
         gameObject.transform.position = position;
 
         yield return new WaitForSeconds(0.01f);

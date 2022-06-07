@@ -43,7 +43,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ff3c06907f3c846a4e1e9ccfc09885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  videoPlayed: 0
   sls: {fileID: 0}
+  tutorialBox1: {fileID: 0}
+  escapeRocket: {fileID: 0}
+  deathMenu: {fileID: 0}
+  ObjForStartVideo:
+  - {fileID: 0}
+  - {fileID: 0}
+  ObjForWinVideo:
+  - {fileID: 0}
+  - {fileID: 0}
   HiddenObjects:
   - {fileID: 0}
   - {fileID: 0}

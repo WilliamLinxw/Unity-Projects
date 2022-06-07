@@ -10,6 +10,7 @@ public class GlobalControl : MonoBehaviour
     public bool gamePaused {get { return _gamePaused;}}
     private bool _gamePaused = false;
     public bool videoPlayed = false;
+    // private bool toGetRef = false;
 
     public SaveLoadSystem sls;  // enable to start from load
     public GameObject tutorialBox1;
@@ -31,7 +32,9 @@ public class GlobalControl : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(Instance.gameObject);
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
             return;
         }
         SceneManager.LoadScene("StartScene", LoadSceneMode.Additive);
@@ -39,6 +42,11 @@ public class GlobalControl : MonoBehaviour
 
     private void Update() 
     {
+        // if (toGetRef)
+        // {
+        //     GetReferences();
+        //     return;
+        // }
         if (Input.GetButtonDown("Esc Menu"))
         {
             if (_gamePaused)
@@ -54,6 +62,12 @@ public class GlobalControl : MonoBehaviour
 
     public void Pause()
     {
+        // get the current velocity of the player (during jumping)
+        if (Player.Instance.isJumping)
+        {
+            Player.Instance.GetVel();
+        }
+        
         Time.timeScale = 0f;    
         AudioListener.pause = true;
         propBarsState = HiddenObjects[0].activeSelf;
@@ -82,12 +96,14 @@ public class GlobalControl : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("MainScene");
         Debug.Log("New scene is loaded!");
+        FindObjectOfType<PickupGenerator>().SpawnPickups(true);
         escapeRocket.GetComponent<EscapeRocket>().LoadSetFuel(0);
         _gamePaused = false;
         Time.timeScale = 1f;
         AudioListener.pause = false;
+        // toGetRef = true;
         Player.Instance.disabled = false;
     }
 
@@ -150,4 +166,30 @@ public class GlobalControl : MonoBehaviour
     {
         SceneManager.LoadScene("StartScene", LoadSceneMode.Additive);
     }
+
+    // since after reload the references would be missing; deprecated!
+    /*
+    private void GetReferences()
+    {
+        Debug.Log("Load references");
+        sls = GameObject.Find("SaveLoadSystem").GetComponent<SaveLoadSystem>();
+        
+        tutorialBox1 = GameObject.Find("Help 1");
+        escapeRocket = GameObject.Find("SM_Veh_Shuttle_02");
+        deathMenu = GameObject.Find("DeathMenu");
+        ObjForStartVideo = new GameObject[2];
+        ObjForStartVideo[0] = GameObject.Find("RawImage");
+        ObjForStartVideo[1] = GameObject.Find("Video Player - Start");
+        ObjForWinVideo = new GameObject[2];
+        ObjForWinVideo[0] = GameObject.Find("RawImage");
+        ObjForWinVideo[1] = GameObject.Find("Video Player - Win");
+
+        HiddenObjects = new List<GameObject>();
+        HiddenObjects.Add(GameObject.Find("PropertyBars"));
+        HiddenObjects.Add(GameObject.Find("Inventory"));
+        HiddenObjects.Add(GameObject.Find("Crafting"));
+
+        toGetRef = false;  // flag off 
+    }
+    */
 }

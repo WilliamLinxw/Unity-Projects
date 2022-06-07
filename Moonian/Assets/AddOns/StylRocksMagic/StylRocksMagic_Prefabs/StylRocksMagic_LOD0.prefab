@@ -42,6 +42,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1548837047316033901}
     m_Modifications:
+    - target: {fileID: 1336414088597152318, guid: 2c2fd9cd7f114c3429836b1d2a17fe93, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1851246827825585822, guid: 2c2fd9cd7f114c3429836b1d2a17fe93, type: 3}
       propertyPath: m_Name
       value: StylRocksMagic_1_LOD0
@@ -108,6 +112,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StylRocksMagic_5_LOD0
       objectReference: {fileID: 0}
+    - target: {fileID: 3261456448304436699, guid: b20616675454eff4d96f08f2e954af14, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3940587522465671413, guid: b20616675454eff4d96f08f2e954af14, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -166,6 +174,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1548837047316033901}
     m_Modifications:
+    - target: {fileID: 3604015454340286163, guid: 7314b9d34785e5940a8ef2a45ac3503a, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4410883803184568277, guid: 7314b9d34785e5940a8ef2a45ac3503a, type: 3}
       propertyPath: m_Name
       value: StylRocksMagic_2_LOD0
@@ -276,6 +288,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StylRocksMagic_3_LOD0
       objectReference: {fileID: 0}
+    - target: {fileID: 6598176796823997255, guid: abf2a0eb6df7a144b8ac342669952bd8, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abf2a0eb6df7a144b8ac342669952bd8, type: 3}
 --- !u!4 &5502552588968037231 stripped
@@ -290,6 +306,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1548837047316033901}
     m_Modifications:
+    - target: {fileID: 4550395741252099896, guid: 4944276ff6bc3a44e8a8da53180655a5, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6530906115176955355, guid: 4944276ff6bc3a44e8a8da53180655a5, type: 3}
       propertyPath: m_Name
       value: StylRocksMagic_4_LOD0
