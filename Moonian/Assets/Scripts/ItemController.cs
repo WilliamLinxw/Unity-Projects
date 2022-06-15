@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// attached to each prefabs -> so that the item-related operations can be performed
 public class ItemController : MonoBehaviour
 {
     public Item item;

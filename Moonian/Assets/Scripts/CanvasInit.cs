@@ -5,6 +5,7 @@ using DevionGames.UIWidgets;
 
 public class CanvasInit : MonoBehaviour
 {
+    // This script mainly control the activity of the game objects on the canvas
     public GameObject healthBar;
     public GameObject o2Bar;
     public GameObject lsBar;
@@ -16,25 +17,24 @@ public class CanvasInit : MonoBehaviour
     public GameObject recipeDescriptionPanel;
 
     private bool[] barsState = new bool[4];
-    private bool itemsPanelShowing;
-    private bool recipesPanelShowing;
 
     void Start()
     {
+        // set all the bars and panels to false during start
         healthBar.SetActive(false);
         o2Bar.SetActive(false);
         lsBar.SetActive(false);
         wBar.SetActive(false);
 
         inventoryUI.SetActive(false);
-        craftingUI.SetActive(true);
-        craftingUI.SetActive(false);
+        craftingUI.SetActive(true);  // guess this is a Unity bug; though it has an Awake function, it is still null and cannot be referred to
+        craftingUI.SetActive(false);  // so these two lines are used here
 
     }
 
     void Update()
     {
-        if (!GlobalControl.Instance.videoPlayed) return;
+        if (!GlobalControl.Instance.videoPlayed) return;  // no video played if played before
         if (InventoryManager.Instance.totalWeight <= 10 && !Help3.activeSelf)
         {
             wBar.SetActive(false);  // hide weight bar if carrying too less
@@ -76,38 +76,19 @@ public class CanvasInit : MonoBehaviour
             inventoryUI.SetActive(false);
         }
 
-        if (Input.GetButtonDown("ItemInfoPanel"))
+        if (Input.GetButtonDown("ItemInfoPanel"))  // toggle the active state of the item information and recipe information panel
         {
-            if (!itemsPanelShowing) 
-            {
-                if (!itemsDescriptionPanel.activeSelf) itemsDescriptionPanel.SetActive(true);
-                itemsDescriptionPanel.GetComponent<UIWidget>().Show();
-                itemsPanelShowing = true;
-            }
-            else 
-            {
-                itemsDescriptionPanel.GetComponent<UIWidget>().Close();
-                itemsPanelShowing = false;
-            }
+            itemsDescriptionPanel.SetActive(!itemsDescriptionPanel.activeSelf);
         }
         if (Input.GetButtonDown("RecipeInfoPanel"))
         {
-            if (!recipesPanelShowing) 
-            {
-                if (!recipeDescriptionPanel.activeSelf) recipeDescriptionPanel.SetActive(true);
-                recipeDescriptionPanel.GetComponent<UIWidget>().Show();
-                recipesPanelShowing = true;
-            }
-            else 
-            {
-                recipeDescriptionPanel.GetComponent<UIWidget>().Close();
-                recipesPanelShowing = false;
-            }
+            recipeDescriptionPanel.SetActive(!recipeDescriptionPanel.activeSelf);
         }
     }
 
     public void BarsOn()
     {
+        // show all the bars
         barsState[0] = healthBar.activeSelf;
         barsState[1] = o2Bar.activeSelf;
         barsState[2] = lsBar.activeSelf;
@@ -128,12 +109,4 @@ public class CanvasInit : MonoBehaviour
         wBar.SetActive(barsState[3]);
     }
 
-    public void SetItemPanelNotShowing()
-    {
-        itemsPanelShowing = false;
-    }
-    public void SetRecipePanelNotShowing()
-    {
-        recipesPanelShowing = false;
-    }
 }

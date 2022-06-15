@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// defines the consumable items, based on the base class Item
 [CreateAssetMenu(fileName = "New Item", menuName = "Item/Consumable")]
 public class Consumable : Item
 {
     public float itemValue;
-    public bool isUpTo;
-    // PlayerProperty playerProperty;
+    public bool isUpTo;  // two types of consumable -> recover some properties to some value or recover it by some value
 
     public override void Use()
     {
-        switch (category)
+        switch (category)  // distinct categories
         {
             case ItemCategory.O2:
                 PlayerProperty.Instance.SupplyO2(itemValue);

@@ -5,16 +5,15 @@ using UnityEngine.UI;
 
 public class EscapeRocket : MonoBehaviour
 {
-    // public static EscapeRocket Instance;
+    // this class is to store the refueling state of the escape rocket
     public int fuel {get { return _fuel;}}
     public RefuelBar rBar;
     public Button launch;
     private int _fuel;
-    private int maxFuel = 30;
+    private int maxFuel = 20;
 
     void Start()
     {
-        // Instance = this;
         _fuel = 0;
         launch.interactable = false;
     }
@@ -22,6 +21,7 @@ public class EscapeRocket : MonoBehaviour
     {
         if (Player.Instance != null)
         {
+            // when the player gets nearby the escape rocket, show the bar and launch button
             if (Player.Instance.atRefueling)
             {
                 rBar.gameObject.SetActive(true);
@@ -40,6 +40,7 @@ public class EscapeRocket : MonoBehaviour
         _fuel += 1;
         rBar.SetValue(_fuel);
         Debug.Log(_fuel);
+        // enable the launch button when the refuel is finished
         if (_fuel >= maxFuel)
         {
             launch.interactable = true;
@@ -48,6 +49,7 @@ public class EscapeRocket : MonoBehaviour
 
     public void LoadSetFuel(int f)
     {
+        // load refuel state when loading a game
         _fuel = f;
         if (rBar.gameObject.activeSelf)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// check if the player has passed the first portal to the base
 public class TutorialTransportCheck : MonoBehaviour
 {
     public Button helpBoxOK;
@@ -15,7 +16,6 @@ public class TutorialTransportCheck : MonoBehaviour
 
     void Update()
     {
-        
         if (Player.Instance != null)
         {
             Vector3 pos = Player.Instance.transform.position;

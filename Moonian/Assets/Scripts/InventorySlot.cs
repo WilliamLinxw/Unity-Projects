@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// this class defines the inventory slot
 public class InventorySlot : MonoBehaviour
 {
     public Image icon;
@@ -52,11 +53,6 @@ public class InventorySlot : MonoBehaviour
                 InventoryManager.Instance.Remove(item);
             }
         }
-        // else
-        // {
-        //     numText.SetActive(false);
-        //     numText.GetComponent<Text>().text = 0.ToString();
-        // }
     }
 
     public void OnRemoveButton()
@@ -68,9 +64,8 @@ public class InventorySlot : MonoBehaviour
     {
         if (item != null)
         {
-            InventoryManager.Instance.Use(item, inCrafting);
+            InventoryManager.Instance.Use(item, inCrafting);  // flag for in the crafting panel
             UpdateAmount();
-            // InventoryManager.Instance.Remove(item);
         }
     }
 

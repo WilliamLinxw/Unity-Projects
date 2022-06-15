@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// data save as this; ONLY primary data structure is used here
 [System.Serializable]
 public class PlayerData
 {
     public float health;
     public float o2;
     public float ls;
-    public int refuel;
+    public int refuel;  // refueling state
 
-    public int[] items;
-    public int[] picked;
+    public int[] items;  // inside the inventory
+    public int[] picked;  // resources(ores) that is picked
 
     public float[] pos;
 

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class TutorialPickupCheck : MonoBehaviour
 {
+    // deprecated
+    // used to check if the player has picked the items as is stated in the tutorial
     public List<GameObject> tutorialPickups;
     public GameObject spotLight;
     public Button okButton;

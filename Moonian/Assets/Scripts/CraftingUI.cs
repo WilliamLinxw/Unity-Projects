@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class CraftingUI : MonoBehaviour
 {
+    // this defines the class/instance of the crafting UI. it displays the item info obtained from crafting manager and inventory manager and provides interactions for crafting operations
     InventoryManager inventory;
     CraftingManager crafting;
     InventorySlot[] i_slots;
@@ -50,6 +51,7 @@ public class CraftingUI : MonoBehaviour
         d_slots = craftingItemsParent.GetComponentsInChildren<CraftedSlot>();
     }
 
+    // callback functions
     void UpdateInventoryUI()
     {
         for (int i = 0; i < i_slots.Length; i++)
@@ -93,6 +95,7 @@ public class CraftingUI : MonoBehaviour
         }
     }
 
+    // manipulation of the button that controls the crafting multiplication amount
     public void AmtIncrement()
     {
         int curAmt = int.Parse(craftAmtText.GetComponent<Text>().text);
@@ -113,6 +116,7 @@ public class CraftingUI : MonoBehaviour
         }
     }
 
+    // make sure that the current amount does not exceed that of the maxAmount in crafting manager
     public void AmtCheck()
     {
         int curAmt = int.Parse(craftAmtText.GetComponent<Text>().text);
@@ -123,6 +127,7 @@ public class CraftingUI : MonoBehaviour
         }
     }
 
+    // actions after clicking on the drop button -> clear slots
     public void OnDropButton()
     {
         CraftingManager.Instance.DropItems();

@@ -11,6 +11,7 @@ public class CraftingSlot : MonoBehaviour
     public bool inCrafting = true;
     Item item;
 
+    // add item to the slot
     public void AddItem(Item newItem)
     {
         item = Instantiate(newItem);
@@ -23,6 +24,7 @@ public class CraftingSlot : MonoBehaviour
         removeButton.interactable = true;
     }
 
+    // reset slot
     public void ClearSlot()
     {
         item = null;

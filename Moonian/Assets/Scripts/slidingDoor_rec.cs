@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Open the door when it is triggered by the player
 public class slidingDoor_rec : MonoBehaviour
 {
     public Vector3 endPos_rec;

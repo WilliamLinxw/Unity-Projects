@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// define the moon gravity
 public class MoonGrav : MonoBehaviour
 {
     public float gravityY;

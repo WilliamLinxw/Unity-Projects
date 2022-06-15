@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PickupGenerator : MonoBehaviour
 {
-    public Transform parentTF;
+    // Generate pickups on the map
+    public Transform parentTF;  // generate all pickups w.r.t. the parent transform (so that the "Pickup" game object can be easier to be managed)
     public List<GenObj> GenerateObjects;
     public List<BoxItems> ContainerItems;
     public int MaxContainerItemNum = 6;
@@ -39,8 +40,8 @@ public class PickupGenerator : MonoBehaviour
                     num -= pked[j];
                 }
             }
-            Debug.Log("Generating" + g.Prefab.GetComponent<ItemController>().item.name + ":" + num);
             if (num <= 0) continue; // no more generation of this item
+            Debug.Log("Generating" + g.Prefab.GetComponent<ItemController>().item.name + ":" + num);
             for (int i = 0; i < num; i++)
             {
                 // generate random items with random positions and rotations
@@ -59,6 +60,7 @@ public class PickupGenerator : MonoBehaviour
 
                 if (obj.name.Contains("Cardbox") || obj.name.Contains("Chest1"))
                 {
+                    // generate container and its containings
                     List<Item> CItems = new List<Item>();
                     List<int> CAmounts = new List<int>();
                     foreach (BoxItems b in SortedItems)
@@ -77,6 +79,7 @@ public class PickupGenerator : MonoBehaviour
         }
     }
 
+    // some functions for utility
     private bool ProbToBool(float pr)
     {
         float rand = Random.Range(0f, 1f);
@@ -100,6 +103,7 @@ public class PickupGenerator : MonoBehaviour
 
 }
 
+// defines the objects to be genrated in the map directly and in chests
 [System.Serializable]
 public class GenObj
 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// controls the active state of the menu (after pressing Esc)
 public class CanvasMenu : MonoBehaviour
 {
     public GameObject Menu;

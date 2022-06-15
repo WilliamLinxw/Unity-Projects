@@ -4,11 +4,13 @@ using System;
 
 public class AudioManager : MonoBehaviour
 {
+    // This deals with plying sound effect and background music
     public Sound[] sounds;
     public static AudioManager instance;
 
     void Awake()
     {
+        // only allow one instance to exist
         if (instance == null)
         {
             instance = this;
@@ -40,6 +42,7 @@ public class AudioManager : MonoBehaviour
 
     public void Play(string name)
     {
+        // play by entering a string name, which is stored as a list
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null)
         {

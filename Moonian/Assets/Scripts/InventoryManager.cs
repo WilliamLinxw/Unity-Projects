@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
+    // stores and manages the inventory of the player
     public static InventoryManager Instance;
     public List<Item> Items = new List<Item>();
     public int maxRoom = 40;
@@ -64,7 +65,7 @@ public class InventoryManager : MonoBehaviour
             Items.Add(Instantiate(item));
         }    
         
-        _totalWeight += item.weight;
+        _totalWeight += item.weight;  // update weight as new item is added; reduce calculation effort
         // add the picked item to the array so that new resources generated would be reduced
         for (int i = 0; i < sls.iList.Count; i++)
         {
@@ -115,6 +116,7 @@ public class InventoryManager : MonoBehaviour
         CalcWeight();
     }
 
+    // weight calculation
     public void CalcWeight()
     {
         float w = 0;

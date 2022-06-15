@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// scene controller for the start scene
 public class StartSceneControl : MonoBehaviour
 {
     public void OnStartButton()

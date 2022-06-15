@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Teleport the player when it hits the portal trigger
 public class teleportTrigger : MonoBehaviour
 {
     Player player;
@@ -21,6 +22,7 @@ public class teleportTrigger : MonoBehaviour
     }
 
 
+    // Teleport between portal 1 2, 3 4, and 5 6
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "portal 1")
@@ -74,12 +76,12 @@ public class teleportTrigger : MonoBehaviour
     }
     IEnumerator Teleport12()
     {
+        // Determine which side the player on relative to the porta
         float side = portal1.transform.position.z - player.transform.position.z;
-        //Debug.Log(side);
-        //Debug.Log(Mathf.Sign(side));
         player.disabled = true;
         yield return new WaitForSeconds(0.001f);
 
+        // Teleport the player to portal2's position
         Vector3 position = this.transform.position;
         position.x = portal2.position.x;
         position.y = portal2.position.y - 3.3f;
@@ -94,8 +96,6 @@ public class teleportTrigger : MonoBehaviour
     IEnumerator Teleport21()
     {
         float side = portal2.transform.position.z - player.transform.position.z;
-        //Debug.Log(side);
-        //Debug.Log(Mathf.Sign(side));
 
         player.disabled = true;
         yield return new WaitForSeconds(0.001f);
@@ -113,10 +113,7 @@ public class teleportTrigger : MonoBehaviour
 
     IEnumerator Teleport34()
     {
-        //Debug.Log("teleport34");
         float side = portal3.transform.position.z - player.transform.position.z;
-        //Debug.Log(side);
-        //Debug.Log(Mathf.Sign(side));
         player.disabled = true;
         yield return new WaitForSeconds(0.001f);
 
@@ -134,8 +131,6 @@ public class teleportTrigger : MonoBehaviour
     IEnumerator Teleport43()
     {
         float side = portal4.transform.position.z - player.transform.position.z;
-        //Debug.Log(side);
-        //Debug.Log(Mathf.Sign(side));
         player.disabled = true;
         yield return new WaitForSeconds(0.001f);
 
@@ -152,10 +147,7 @@ public class teleportTrigger : MonoBehaviour
 
     IEnumerator Teleport56()
     {
-        //Debug.Log("teleport34");
         float side = portal5.transform.position.z - player.transform.position.z;
-        //Debug.Log(side);
-        //Debug.Log(Mathf.Sign(side));
         player.disabled = true;
         yield return new WaitForSeconds(0.001f);
 
@@ -172,10 +164,7 @@ public class teleportTrigger : MonoBehaviour
 
     IEnumerator Teleport65()
     {
-        //Debug.Log("teleport34");
         float side = portal6.transform.position.z - player.transform.position.z;
-        //Debug.Log(side);
-        //Debug.Log(Mathf.Sign(side));
         player.disabled = true;
         yield return new WaitForSeconds(0.01f);
 

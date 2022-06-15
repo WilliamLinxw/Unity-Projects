@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        // make sure only one Player instance exists
         if (Instance == null)
         {
             Instance = this;
@@ -68,12 +69,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         speed = speedDefault;
-        if (PlayerProperty.Instance.isOverweight)
-        {
-            speed = speed * overweightVelRatio;
-        }
+        OverweightCheck();
 
-        
         if (!disabled)
         {
             MotionUpdate(Time.deltaTime);
@@ -85,13 +82,31 @@ public class Player : MonoBehaviour
             return;
         }
         
+        PickUpCheck();
+        FoVChangeCheck();
+        LightCheck();
+
+    }
+
+    void OverweightCheck()
+    {
+        if (PlayerProperty.Instance.isOverweight)
+        {
+            speed = speed * overweightVelRatio;
+        }
+    }
+    void PickUpCheck()
+    {
         // pickup by press E
         if (Input.GetKeyDown(KeyCode.E))
         {
             pressE = 0;
         }
         pressE += 1;
+    }
 
+    void FoVChangeCheck()
+    {
         // mouse scroll as input
         if (Input.mouseScrollDelta.y != 0)
         {
@@ -101,18 +116,20 @@ public class Player : MonoBehaviour
             fov += deltaFov;
             cam.fieldOfView = Mathf.Clamp(fov, fovMin, fovMax);
         }
-
+    }
+    void LightCheck()
+    {
         // light check
         if (Input.GetButtonDown("Player Light Switch"))
         {
             PlayerProperty.Instance.playerLightOn = !PlayerProperty.Instance.playerLightOn;
             this.gameObject.transform.Find("PlayerLight").gameObject.SetActive(!this.gameObject.transform.Find("PlayerLight").gameObject.activeSelf);
         }
-
     }
 
     void MotionUpdate(float deltaTime)
     {
+        // update for motions
         if (storedVel != Vector3.zero && !controller.isGrounded)
         {
             storedVel.y += Physics.gravity.y * deltaTime;
@@ -132,8 +149,10 @@ public class Player : MonoBehaviour
         {
             airtime += deltaTime;
         }
+        // Move forward
         if (Input.GetKey("w"))
         {
+            // Accelerate
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 anim.SetInteger("AnimationPar", 1);
@@ -143,6 +162,7 @@ public class Player : MonoBehaviour
                 anim.SetInteger("AnimationPar", 2);
             }
         }
+        // Move backward
         else if (Input.GetKey("s"))
         {
             anim.SetInteger("AnimationPar", 3);
@@ -154,8 +174,10 @@ public class Player : MonoBehaviour
 
         float horizontalInput = Input.GetAxis("Horizontal");
 
+        // Assign the vertical speed
         ySpeed += Physics.gravity.y * deltaTime;
 
+        // Only be able to jump when grounded
         if (controller.isGrounded)
         {
             anim.SetBool("IsGrounded", true);
@@ -190,6 +212,7 @@ public class Player : MonoBehaviour
             transform.Rotate(0, horizontalInput * turnSpeed * deltaTime, 0);
         }
 
+        // Change the speed when accelerate
         isRunning = Input.GetKey(KeyCode.LeftShift);
         isBackwards = Input.GetKey("s");
         if (isRunning)
@@ -205,6 +228,7 @@ public class Player : MonoBehaviour
             speed = speedDefault;
         }
 
+        // Determine the direction
         movementDirection = transform.forward * Input.GetAxis("Vertical") * speed;
         Vector3 velocity = Vector3.zero;
         if (controller.isGrounded && !jumpflag)
@@ -220,18 +244,17 @@ public class Player : MonoBehaviour
         controller.Move(velocity * deltaTime);
     }
 
+    // check if some triggers are active
     private void OnTriggerStay(Collider other) 
     {
         if (other.gameObject.CompareTag("Pickups") && other.gameObject.GetComponent<ItemController>().item.isCollectable && pressE <= 200)
         {
-            bool interacted = other.gameObject.GetComponent<ItemController>().Interact();
+            bool interacted = other.gameObject.GetComponent<ItemController>().Interact();  // adding to the inventory is integrated to the Interact()
             if (interacted)
             {
                 other.gameObject.SetActive(false);
                 FindObjectOfType<AudioManager>().Play("Pickup_1");
             }
-            // Item item = other.gameObject.GetComponent<ItemController>().item;
-            // InventoryManager.Instance.Add(item);
 
             pressE = 1000;
         }
@@ -286,6 +309,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // position reset after loading or starting a new game
     public void SetPos(Vector3 pos)
     {
         controller.transform.position = pos;
@@ -297,6 +321,7 @@ public class Player : MonoBehaviour
         controller.SimpleMove(storedVel);
     }
 
+    // store the velocity when a pause is called (e.g., during jumping)
     public void GetVel()
     {
         storedVel = controller.velocity;

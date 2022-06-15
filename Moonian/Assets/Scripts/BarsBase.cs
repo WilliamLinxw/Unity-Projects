@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace PropBars
 {
+    // the base class of the bars. All bar objects inherit from this
     public class BarsBase : MonoBehaviour
     {
         public Slider slider;
@@ -19,6 +20,7 @@ namespace PropBars
             slider.maxValue = value;
         }
 
+        // set the value of the slider
         public void SetValue(float value)
         {
             if (value > slider.maxValue)
@@ -29,7 +31,7 @@ namespace PropBars
         }
 
         private void Update() {
-            lerpSpeed = 3f * Time.deltaTime;
+            lerpSpeed = 3f * Time.deltaTime;  // to make it smooth
             slider.value = Mathf.Lerp(slider.value, targetValue, lerpSpeed);
             if (isGradFilled)
             {

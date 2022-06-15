@@ -32,11 +32,12 @@ public class CraftingManager : MonoBehaviour
     {
         currentAmount = CraftingUI.Instance.currentAmount;
         Crafting = Remove0Items(Crafting);
-        Crafted = Remove0Items(Crafted);
+        Crafted = Remove0Items(Crafted);  // remove the items with 0 amount
     }
 
     public void AddCraftingItem(Item item)
     {
+        // add the item to the crafting list
         Item item_ = Instantiate(item);
         int item_ind = CheckContainsItem(item_.itemName, Crafting);
         if (Crafting.Count >= maxCraftingRoom && item_ind == -1)
@@ -44,16 +45,16 @@ public class CraftingManager : MonoBehaviour
             Debug.Log("No enough crafting room!");
             item_.itemAmount = 1;
             InventoryManager.Instance.Add(item_);
-            return;
+            return;  // not to add when there's no room
         }
-        if (item_ind == -1)
+        if (item_ind == -1) // item does not exist in the list
         {
             item_.itemAmount = 1;
             Crafting.Add(item_);
         }
         else
         {
-            Crafting[item_ind].itemAmount += 1;
+            Crafting[item_ind].itemAmount += 1; // already exists -> only add one in amount
         }
         if (onItemChangedCallback != null)
         {
@@ -63,6 +64,7 @@ public class CraftingManager : MonoBehaviour
     }
     public void RemoveCraftingItem(Item item)
     {
+        // remove crafting items
         if (item == null)
         {
             return;
@@ -86,9 +88,12 @@ public class CraftingManager : MonoBehaviour
 
     public void CheckRecipes()
     {
+        // compare the crafting list and check the corresponding recipe.
         maxAmount = 0;
-        SortedCrafting = new List<Item>(Crafting);
-        SortedCrafting.Sort(SortFunc);
+        SortedCrafting = new List<Item>(Crafting);  // to eliminate the problem of orders, items are stored in a sorted list.
+        SortedCrafting.Sort(SortFunc);  // use defined sort function (by comparing the ID)
+
+        // then check among all the recipes. also calculates the max amount of items that can be crafted
         foreach (Recipe r in Recipes)
         {
             if (r.Source_items.Count != SortedCrafting.Count)
@@ -123,6 +128,7 @@ public class CraftingManager : MonoBehaviour
 
     public void GenerateCraftedItems()
     {
+        // generate the crafted items in the crafted slot
         if (rcp != null)
         {
             if (rcp.requireTable && !Player.Instance.atWorktable)
@@ -209,6 +215,7 @@ public class CraftingManager : MonoBehaviour
 
     private int SortFunc(Item a, Item b)
     {
+        // self defined sort function
         if (a.id < b.id)
             return -1;
         else if (a.id > b.id)
@@ -218,6 +225,7 @@ public class CraftingManager : MonoBehaviour
 
     private int AmountListComp(List<int> a, List<int> b)
     {
+        // check the amount that can be crafted
         if (a.Count != b.Count) return -1;
         else
         {
@@ -235,7 +243,7 @@ public class CraftingManager : MonoBehaviour
     {
         if (l != null && l.Count > 0)
         {
-            List<Item> l_ = new List<Item>(l);
+            List<Item> l_ = new List<Item>(l);  // do the iteration in the cloned list
             foreach (Item i in l_)
             {
                 if (i == null || i.itemAmount <= 0)

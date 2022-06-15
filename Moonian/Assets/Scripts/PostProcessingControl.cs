@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
+// deal with the post processing
 public class PostProcessingControl : MonoBehaviour
 {
     public GameObject dyingLayer;
@@ -39,9 +40,14 @@ public class PostProcessingControl : MonoBehaviour
     {
         float health = PlayerProperty.Instance.currentHealth;
         float dweight = 0;  // weight for the dying layer; this mainly changes the saturation
+        // change the weight of the dying layer when the current health is less than some threshold values
         if (health <= healthThreshold)
         {
             dweight = (healthThreshold - health) / healthThreshold;
+        }
+        else
+        {
+            dweight = 0f;
         }
         dweight = Mathf.Clamp(dweight, 0, 1);
         dyingVolume.weight = dweight;

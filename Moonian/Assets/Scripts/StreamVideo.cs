@@ -6,6 +6,7 @@ using UnityEngine.Video;
 
 public class StreamVideo : MonoBehaviour
 {
+    // this script would take charge of playing the video
     public RawImage rawImage;
     public VideoPlayer videoPlayer;
     public AudioSource audioSource;
@@ -41,13 +42,8 @@ public class StreamVideo : MonoBehaviour
         flag += 1;
         if (flag >= 100 && !videoPlayer.isPlaying)
         {
-            GlobalControl.Instance.videoPlayed = true;
-            Cursor.visible = true;
-            rawImage.gameObject.SetActive(false);
-            videoPlayer.gameObject.SetActive(false);
-            audioSource.gameObject.SetActive(false);
-            blackpaper.SetActive(false);
-            this.enabled = false;
+            // the video ends -> take some actions
+            VideoEnd();
             if (backToStartScene)
             {
                 GlobalControl.Instance.BackToStartScene();
@@ -55,4 +51,19 @@ public class StreamVideo : MonoBehaviour
         }
     }
 
+    void OnSkipButton()
+    {
+        VideoEnd();
+    }
+
+    void VideoEnd()
+    {
+        GlobalControl.Instance.videoPlayed = true;
+        Cursor.visible = true;
+        rawImage.gameObject.SetActive(false);
+        videoPlayer.gameObject.SetActive(false);
+        audioSource.gameObject.SetActive(false);
+        blackpaper.SetActive(false);
+        this.enabled = false;
+    }
 }

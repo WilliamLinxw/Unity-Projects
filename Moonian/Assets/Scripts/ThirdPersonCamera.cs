@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Control of the third person camera
 public class ThirdPersonCamera : MonoBehaviour
 {
     private const float Y_ANGLE_MIN = -60.0f;
@@ -35,6 +36,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
     }
 
+    // Move the camera according to the movement of the mouse
     void camControl()
     {
         if (!FindObjectOfType<GlobalControl>().gamePaused)
@@ -53,13 +55,12 @@ public class ThirdPersonCamera : MonoBehaviour
         }
     }
 
+    // If the camera is blocked by an object, make it invisible. Make it visible after the sight is clear
     void ViewObstructed()
     {
         RaycastHit hit;
-        //Debug.Log("target:" + Target.position);
-        //Debug.Log("transform:" + transform.position);
-
         
+        // Change the target position of the ray to a higher one for better performance
         if (!changed)
         {
             Vector3 position = Target.position;
@@ -71,11 +72,10 @@ public class ThirdPersonCamera : MonoBehaviour
         }
         
 
-        //Debug.Log("target after:" + Target.position);
         Vector3 direction = Target.position - transform.position;
-        //Debug.Log("direction:" + direction);
-        //Debug.Log("forward:" + transform.TransformDirection(Vector3.forward));
 
+        // Shoot a ray from the camera to the user, check if it's block by non-player objects, if so, make them invisible
+        // Restore them back after the sight is clear again
         if (Physics.Raycast(transform.position, Target.position - transform.position, out hit, 13f))
         {
             Debug.DrawRay(transform.position, direction * hit.distance, Color.yellow);
@@ -83,17 +83,15 @@ public class ThirdPersonCamera : MonoBehaviour
             {
                 if (hit.collider.gameObject.tag != "Player")
                 {
-                    //Debug.Log("not player");
-                    //Debug.Log(hit.collider.gameObject.tag);
+                    // Construct a list to store all the objects that have blocked the sight
                     var isContain = obstructionList.Contains(hit.collider.gameObject);
                     if (!isContain)
                     {
                         obstructionList.Add(hit.collider.gameObject);
                     }
                     
-                    //Debug.Log(obstructionList.ToArray().Length);
 
-
+                    // Make all the objects in the list invisible
                     foreach(GameObject obstruction in obstructionList)
                     {
                         if (obstruction.GetComponent<MeshRenderer>() != null)
@@ -103,23 +101,11 @@ public class ThirdPersonCamera : MonoBehaviour
                             
                     }
                     
-                    //Obstruction = hit.transform;
-                    //if (Obstruction.gameObject.GetComponent<MeshRenderer>() != null)
-                    //{
-                    //   Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-                    //}
-                    
-                    //Debug.Log("distance obstruction to transform:" + Vector3.Distance(Obstruction.position, transform.position));
-                    //Debug.Log("distance target to transform:" + Vector3.Distance(transform.position, Target.position));
-                    //if (Vector3.Distance(Obstruction.position, transform.position) >= 3f && Vector3.Distance(transform.position, Target.position) >= 1.5f)
-                    //{
-                    //    Debug.Log("zoom");
-                    //    transform.Translate(Vector3.forward * zoomSpeed * Time.deltaTime);
-                    //}
                 }
+
+                // Restore objects back
                 else
                 {
-                    // Debug.Log(obstructionList.ToArray().Length);
                     foreach (GameObject obstruction in obstructionList)
                     {
                         if (obstruction.GetComponent<MeshRenderer>() != null)
@@ -129,20 +115,6 @@ public class ThirdPersonCamera : MonoBehaviour
 
                     }
                     obstructionList.Clear();
-
-                    //Debug.Log("player");
-                    //if (Obstruction.gameObject.GetComponent<MeshRenderer>() != null)
-                    //{
-                    //    
-                    //
-                    //    Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-                    //}
-
-                    //if (Vector3.Distance(transform.position, Target.position) < 4.5f)
-                    //{
-                    //    transform.Translate(Vector3.back * zoomSpeed * Time.deltaTime);
-                    //}
-
                 }
             }
             

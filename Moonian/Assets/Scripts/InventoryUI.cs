@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// this class defines the UI of the player inventory.
 public class InventoryUI : MonoBehaviour
 {
     public static InventoryUI Instance;

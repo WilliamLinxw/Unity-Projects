@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Calculate the relative position between the player camera and door1, move door2's camera to the position
+// relative to door2 as player camera relative to door1
+// Detailed comments in portaleffect
 public class portaleffect6 : MonoBehaviour
 {
     public Transform door1;
@@ -9,7 +12,6 @@ public class portaleffect6 : MonoBehaviour
     public Transform playerCamera;
     private Vector3 relativeVector;
     public Camera portalCamera;
-    private bool flipped = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,23 +35,5 @@ public class portaleffect6 : MonoBehaviour
         var rotationVector = playerCamera.transform.rotation.eulerAngles;
         rotationVector.x -= 10f;
         this.transform.rotation = Quaternion.Euler(rotationVector);
-
-        //if (portalCamera.transform.position.z - door2.transform.position.z >= 0 && flipped == false)
-        //{
-        //    Debug.Log(flipped);
-        //    Matrix4x4 mat = portalCamera.projectionMatrix;
-        //    mat *= Matrix4x4.Scale(new Vector3(-1, 1, 1));
-        //    portalCamera.projectionMatrix = mat;
-        //    flipped = true;
-        //}
-        //if (portalCamera.transform.position.z - door2.transform.position.z < 0 && flipped == true)
-        //{
-        //    Debug.Log(flipped);
-        //    Matrix4x4 mat = portalCamera.projectionMatrix;
-        //    mat *= Matrix4x4.Scale(new Vector3(-1, 1, 1));
-        //    portalCamera.projectionMatrix = mat;
-        //    flipped = false;
-        //}
-
     }    
 }

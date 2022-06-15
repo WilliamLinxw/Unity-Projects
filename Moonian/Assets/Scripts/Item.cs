@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// base class for items; use scriptable object so that the real items can be created inside Unity
 [CreateAssetMenu(fileName = "New Item", menuName="Item/Common Item")]
 public class Item : ScriptableObject
 {
@@ -21,6 +22,7 @@ public class Item : ScriptableObject
         // use this item...
         Debug.Log("Using" + itemName);
     }
+    // the clone method, like the "copy" and "deep copy" in python
     public Item Clone() => new Item {
         id = this.id,
         itemName = this.itemName,
@@ -35,4 +37,5 @@ public class Item : ScriptableObject
     };
 }
 
+// defines the category of items -> consumables -> add values to the properties
 public enum ItemCategory {Flag, Food, Fuel, LSSupplement, Medicine, O2, Ore, ShipWreckage, TerrainObj, Tools, Water, Others, Container}

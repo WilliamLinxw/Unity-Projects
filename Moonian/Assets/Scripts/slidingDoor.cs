@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// Open the door when it is triggered by the player
 public class slidingDoor : MonoBehaviour
 {
     public Vector3 endPos;
@@ -22,6 +24,7 @@ public class slidingDoor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Only open the door when it's close, close the door after it opens.
         if (moving)
         {
             if (opening)
@@ -35,6 +38,7 @@ public class slidingDoor : MonoBehaviour
         }
     }
 
+    // Move the door to the goalPos
     void MoveDoor(Vector3 goalPos)
     {
         float dist = Vector3.Distance(transform.localPosition, goalPos);

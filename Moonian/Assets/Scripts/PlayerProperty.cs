@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerProperty : MonoBehaviour
 {
+    // define the properties of the player: health, oxygen and LS state, also some operations on these prop
     public static PlayerProperty Instance;
     public float maxHealth, maxO2, maxLS = 100f;
     private float _currentHealth, _currentO2, _currentLS;
@@ -182,7 +183,7 @@ public class PlayerProperty : MonoBehaviour
         }
     }
 
-    void InitializeProperties()
+    public void InitializeProperties()
     {
         _currentHealth = maxHealth;
         _currentO2 = maxO2;

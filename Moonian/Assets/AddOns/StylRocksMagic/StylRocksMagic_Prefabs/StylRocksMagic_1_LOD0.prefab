@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7489820136206759915}
   - component: {fileID: 5052073590532535834}
   - component: {fileID: 1336414088597152318}
+  - component: {fileID: 2496351145423938579}
   m_Layer: 0
   m_Name: StylRocksMagic_1_LOD0
   m_TagString: Untagged
@@ -56,6 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -80,6 +82,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &1336414088597152318
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -89,8 +92,21 @@ MeshCollider:
   m_GameObject: {fileID: 1851246827825585822}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1138965167089476267, guid: ba0f9b3d54f9cba4492f05a160a3dda8, type: 3}
+--- !u!65 &2496351145423938579
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851246827825585822}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7601473, y: 1.9346335, z: 0.5439619}
+  m_Center: {x: -0.000061035156, y: 0.000000029802322, z: -0.000000014901165}

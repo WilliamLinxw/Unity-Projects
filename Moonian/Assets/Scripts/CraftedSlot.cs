@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// this defines the slot of the crafted outcomes
 public class CraftedSlot : MonoBehaviour
 {
     public Image icon;
     public GameObject numText;
     Item item;
 
+    // add an new item to the slot: set spirite, amount and the displayed amount
     public void AddItem(Item newItem)
     {
         item = Instantiate(newItem);
@@ -24,6 +26,7 @@ public class CraftedSlot : MonoBehaviour
         numText.GetComponent<Text>().text = newItem.itemAmount.ToString();
     }
 
+    // reset the slot
     public void ClearSlot()
     {
         item = null;
@@ -35,6 +38,7 @@ public class CraftedSlot : MonoBehaviour
 
     }
 
+    // by clicking the item -> add the item to the inventory
     public void OnCollectButton()
     {
         if (item != null)

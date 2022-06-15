@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// controls the save and load of the game process
+// Ref: https://www.youtube.com/watch?v=XOjd_qU2Ido
 public class SaveLoadSystem : MonoBehaviour
 {
     public List<Item> iList;

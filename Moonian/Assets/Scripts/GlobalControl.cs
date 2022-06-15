@@ -5,13 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GlobalControl : MonoBehaviour
 {
-    // this scripts mainly controls the pause/start of the game, the save/load of game file and the win/death of the player
+    // this scripts mainly controls the pause/start/scene switch of the game, the save/load of game file and the win/death of the player
     public static GlobalControl Instance;
     public bool gamePaused {get { return _gamePaused;}}
     private bool _gamePaused = false;
     public bool videoPlayed = false;
     // private bool toGetRef = false;
 
+    private Vector3 iniPos = new Vector3(3566.32f, 1.96f, -2620.85f);  // initial spawn position
     public SaveLoadSystem sls;  // enable to start from load
     public GameObject tutorialBox1;
     public GameObject escapeRocket;
@@ -42,11 +43,6 @@ public class GlobalControl : MonoBehaviour
 
     private void Update() 
     {
-        // if (toGetRef)
-        // {
-        //     GetReferences();
-        //     return;
-        // }
         if (Input.GetButtonDown("Esc Menu"))
         {
             if (_gamePaused)
@@ -96,19 +92,47 @@ public class GlobalControl : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene("MainScene");
-        Debug.Log("New scene is loaded!");
+        /*
+        things to do in the restart (undo the changes the player made to the env):
+        (1) move the player back to the starting point
+        (2) reset player properties
+        (3) reset the inventory, crafting and craftes slots
+        (4) reset the bars
+        (5) re-generate the pickup objects
+        (6) reset the escape rocket state
+        */
+        Player.Instance.disabled = true;
+
+        Player.Instance.SetPos(iniPos);
+        InventoryManager.Instance.Items = new List<Item>();
+        FindObjectOfType<InventoryUI>().UpdateUI();
+        CraftingManager.Instance.Crafting = new List<Item>();
+        CraftingManager.Instance.Crafted = new List<Item>();
+        CraftingManager.Instance.DropItems();
+        PlayerProperty.Instance.InitializeProperties();
+
+        Transform generated = FindObjectOfType<PickupGenerator>().parentTF;
+        foreach (Transform child in generated)
+        {
+            GameObject.Destroy(child.gameObject);  // destroy all generated pickups
+        }
+        foreach (Transform preDefinedPickupTF in generated.parent)
+        {
+            if (!preDefinedPickupTF.gameObject.activeSelf)
+            {
+                preDefinedPickupTF.gameObject.SetActive(true);  // re-active the predefined pickups
+            }
+        }
         FindObjectOfType<PickupGenerator>().SpawnPickups(true);
-        escapeRocket.GetComponent<EscapeRocket>().LoadSetFuel(0);
-        _gamePaused = false;
-        Time.timeScale = 1f;
-        AudioListener.pause = false;
-        // toGetRef = true;
+
+        FindObjectOfType<EscapeRocket>().LoadSetFuel(0);
+
         Player.Instance.disabled = false;
     }
 
     public void StartLoad()
     {
+        // load game
         videoPlayed = true;
         Time.timeScale = 1f;
         AudioListener.pause = false;
@@ -128,6 +152,7 @@ public class GlobalControl : MonoBehaviour
 
     public void Quit()
     {
+        // quit game
         Application.Quit();
     }
 
@@ -166,30 +191,4 @@ public class GlobalControl : MonoBehaviour
     {
         SceneManager.LoadScene("StartScene", LoadSceneMode.Additive);
     }
-
-    // since after reload the references would be missing; deprecated!
-    /*
-    private void GetReferences()
-    {
-        Debug.Log("Load references");
-        sls = GameObject.Find("SaveLoadSystem").GetComponent<SaveLoadSystem>();
-        
-        tutorialBox1 = GameObject.Find("Help 1");
-        escapeRocket = GameObject.Find("SM_Veh_Shuttle_02");
-        deathMenu = GameObject.Find("DeathMenu");
-        ObjForStartVideo = new GameObject[2];
-        ObjForStartVideo[0] = GameObject.Find("RawImage");
-        ObjForStartVideo[1] = GameObject.Find("Video Player - Start");
-        ObjForWinVideo = new GameObject[2];
-        ObjForWinVideo[0] = GameObject.Find("RawImage");
-        ObjForWinVideo[1] = GameObject.Find("Video Player - Win");
-
-        HiddenObjects = new List<GameObject>();
-        HiddenObjects.Add(GameObject.Find("PropertyBars"));
-        HiddenObjects.Add(GameObject.Find("Inventory"));
-        HiddenObjects.Add(GameObject.Find("Crafting"));
-
-        toGetRef = false;  // flag off 
-    }
-    */
 }
